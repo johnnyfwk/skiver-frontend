@@ -1,11 +1,35 @@
 * {
   box-sizing: border-box;
+  text-decoration: none;
+}
+
+p {
+  line-height: 1.5rem;
 }
 
 header {
   background: #838383;
+  display: flex;
+  justify-content: space-between;
 }
 
 nav {
   background: #cecece;
+}
+
+.switch-forms-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.switch-forms-link:hover {
+  text-decoration: none;
+}
+
+.success {
+  color: #1ae000;
+}
+
+.error {
+  color: #ff0000;
 }
