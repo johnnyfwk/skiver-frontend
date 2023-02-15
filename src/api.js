@@ -11,3 +11,11 @@ export function getUsers() {
             return response.data.users;
         })
 }
+
+export function registerUser(username, password) {
+    return skiverApiBaseUrl
+        .post('/users', {username, password})
+        .then((response) => {
+            return response;
+        })
+}

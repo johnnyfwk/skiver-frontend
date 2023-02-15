@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 import { UserContext } from '../contexts/User';
 import { useNavigate } from 'react-router-dom';
 
-export default function Home() {
+export default function CreateAPost() {
     const { user, setUser } = useContext( UserContext );
 
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function Home() {
 
     return (
         <main>
-            <h1>Welcome {user}!</h1>
+            <h1>Create a Post</h1>
         </main>
     )
 }
