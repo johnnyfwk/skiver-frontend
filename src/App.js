@@ -12,6 +12,7 @@ import Error404 from './components/Error404';
 
 function App() {
   const [ users, setUsers ] = useState( [] );
+  const [ posts, setPosts ] = useState( [] );
 
   return (
     <div className="App">
@@ -19,7 +20,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Index users={users} setUsers={setUsers}/>}/>
-        <Route path="/home" element={<Home />}/>
+        <Route path="/home" element={<Home users={users} setUsers={setUsers} posts={posts} setPosts={setPosts}/>}/>
         <Route path="/profile" element={<Profile />}/>
         <Route path="/create-a-post" element={<CreateAPost />}/>
         <Route path="/*" element={<Error404 />}/>

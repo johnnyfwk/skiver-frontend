@@ -3,6 +3,10 @@
   text-decoration: none;
 }
 
+img {
+  width: 100%;
+}
+
 p,
 strong {
   line-height: 1.5rem;
@@ -16,6 +20,11 @@ header {
 
 nav {
   background: #cecece;
+}
+
+main {
+  max-width: 800px;
+  margin: auto;
 }
 
 .switch-forms-link {
@@ -38,4 +47,21 @@ nav {
 textarea {
   width: 100%;
   height: 100px;
+}
+
+.url-input {
+  width: 100%;
+}
+
+#post-cards {
+  display: grid;
+  gap: 50px;
+}
+
+.post-card {
+  background: orange;
+}
+
+.post-card img {
+  width: 100px;
 }

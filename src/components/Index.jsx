@@ -9,6 +9,7 @@ export default function Index( {users, setUsers} ) {
     const [ usernames, setUsernames ] = useState( [] );
     const [ registerUsernameInput, setRegisterUsernameInput ] = useState( "" );
     const [ registerPasswordInput, setRegisterPasswordInput ] = useState( "" );
+    const [ registerProfileImageUrlInput, setRegisterProfileImageUrlInput ] = useState( "" );
     const [ logInUsernameInput, setLogInUsernameInput ] = useState( "" );
     const [ logInPasswordInput, setLogInPasswordInput ] = useState( "" );
     const [ isLogInPasswordCorrect, setIsLogInPasswordCorrect ] = useState( null );
@@ -17,6 +18,7 @@ export default function Index( {users, setUsers} ) {
     const [ isUsernameRegisteredSuccessfully, setIsUsernameRegisteredSuccessfully ] = useState( null );
     const [ userLoggedInSuccessfully, setUserLoggedInSuccessfully ] = useState( null );
     const [ isLogInFormVisible, setIsLogInFormVisible] = useState( true );
+    const [ isProfileImageUrlInputValid, setIsProfileImageUrlInputValid ] = useState( null );
 
     const navigate = useNavigate();
 
@@ -69,11 +71,21 @@ export default function Index( {users, setUsers} ) {
         setRegisterPasswordInput(event.target.value);
     }
 
+    function onChangeRegisterProfileImageUrlInput(event) {
+        setRegisterProfileImageUrlInput(event.target.value);
+        setIsProfileImageUrlInputValid(null);
+    }
+
     function handleSubmitCreateAnAccount(event) {
-        setIsUsernameRegisteredSuccessfully(null)
         event.preventDefault();
+        setIsUsernameRegisteredSuccessfully(null);
+        setIsProfileImageUrlInputValid(null);   
         const registerUsernameInputAsLowercase = registerUsernameInput.toLowerCase();
-        api.registerUser(registerUsernameInputAsLowercase, registerPasswordInput)
+
+        const isUrl = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
+        if (isUrl.test(registerProfileImageUrlInput) || registerProfileImageUrlInput.length === 0) {
+            setIsProfileImageUrlInputValid(true);
+            api.registerUser(registerUsernameInputAsLowercase, registerPasswordInput, registerProfileImageUrlInput)
             .then((response) => {
                 setUser(registerUsernameInputAsLowercase);
                 setIsUsernameRegisteredSuccessfully(true);
@@ -83,6 +95,9 @@ export default function Index( {users, setUsers} ) {
                 console.log(error);
                 setIsUsernameRegisteredSuccessfully(false);
             })
+        } else {
+            setIsProfileImageUrlInputValid(false);
+        }
     }
 
     function onChangeLogInUsernameInput(event) {
@@ -212,6 +227,24 @@ export default function Index( {users, setUsers} ) {
                         onChange={onChangeRegisterPasswordInput}
                         maxLength="20">
                     </input>
+
+                    <br /><br />
+
+                    <label htmlFor="register-profile-image">Enter a profile image URL (optional):</label>
+                    <br />
+                    <input
+                        autoComplete="off"
+                        type="text"
+                        id="register-profile-image-url"
+                        className="url-input"
+                        name="register-profile-image-url"
+                        value={registerProfileImageUrlInput}
+                        onChange={onChangeRegisterProfileImageUrlInput}>
+                    </input>
+
+                    {isProfileImageUrlInputValid === null || isProfileImageUrlInputValid === true
+                    ? null
+                    : <span className="error">Please enter a valid URL.</span>}
                     
                     {isUsernameRegisteredSuccessfully === null || isUsernameRegisteredSuccessfully === true
                         ? null
