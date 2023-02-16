@@ -6,14 +6,11 @@ import PostCard from './PostCard';
 import * as api from '../api';
 
 export default function Home( {users, setUsers, posts, setPosts} ) {
-    const { user, setUser } = useContext( UserContext );
-
-    console.log(users, "<------ users")
+    const { username, setUsername } = useContext( UserContext );
     
     const navigate = useNavigate();
-
     useEffect(() => {
-        if (!user) {
+        if (!username) {
             navigate('/');
         }
     }, [])
@@ -42,7 +39,7 @@ export default function Home( {users, setUsers, posts, setPosts} ) {
 
     return (
         <main>
-            <h1>Welcome {user}!</h1>
+            <h1>Welcome {username}!</h1>
             <p>View posts by other users below or <Link to="/create-a-post">create your own</Link>.</p>
 
             <Search />

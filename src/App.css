@@ -5,6 +5,7 @@
 
 img {
   width: 100%;
+  max-width: 200px;
 }
 
 p,
@@ -16,6 +17,10 @@ header {
   background: #838383;
   display: flex;
   justify-content: space-between;
+}
+
+footer {
+  background: #838383;
 }
 
 nav {
@@ -60,8 +65,4 @@ textarea {
 
 .post-card {
   background: orange;
-}
-
-.post-card img {
-  width: 100px;
 }

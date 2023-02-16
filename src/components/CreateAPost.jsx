@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import * as api from '../api';
 
 export default function CreateAPost() {
-    const { user, setUser } = useContext( UserContext );
+    const { username, setUsername } = useContext( UserContext );
     const [ postTextInput, setPostTextInput ] = useState( "" );
     const [ imageUrlInput, setImageUrlInput ] = useState( "" );
     const [ isImageURlInputValid, setIsImageURlInputValid ] = useState( null );
@@ -13,7 +13,7 @@ export default function CreateAPost() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
+        if (!username) {
             navigate('/');
         }
     }, [])
@@ -37,7 +37,7 @@ export default function CreateAPost() {
         const isUrl = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
         if (isUrl.test(imageUrlInput) || imageUrlInput.length === 0) {
             setIsImageURlInputValid(true);
-            api.createAPost(user, postTextInput, 0, imageUrlInput, Date.now())
+            api.createAPost(username, postTextInput, 0, imageUrlInput, Date.now())
                 .then((response) => {
                     setIsPostSubmittedSuccessfully(true);
                     navigate('/home');
@@ -50,11 +50,6 @@ export default function CreateAPost() {
             setIsImageURlInputValid(false);
         }
     }
-
-    // const timestamp = Date.now();
-    // console.log(timestamp, "<------- timestamp")
-    // const date = new Date(timestamp).toLocaleString();
-    // console.log(date, "<------- date");
 
     return (
         <main>

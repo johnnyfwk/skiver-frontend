@@ -4,7 +4,7 @@ import { UserContext } from '../contexts/User';
 import * as api from '../api';
 
 export default function Index( {users, setUsers} ) {
-    const { user, setUser } = useContext( UserContext );
+    const { username, setUsername } = useContext( UserContext );
     const [ getUsernamesSuccessful, setGetUsernamesSuccessful ] = useState( null );
     const [ usernames, setUsernames ] = useState( [] );
     const [ registerUsernameInput, setRegisterUsernameInput ] = useState( "" );
@@ -23,7 +23,7 @@ export default function Index( {users, setUsers} ) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) {
+        if (username) {
             navigate('/home');
         }
     }, [])
@@ -87,7 +87,7 @@ export default function Index( {users, setUsers} ) {
             setIsProfileImageUrlInputValid(true);
             api.registerUser(registerUsernameInputAsLowercase, registerPasswordInput, registerProfileImageUrlInput)
             .then((response) => {
-                setUser(registerUsernameInputAsLowercase);
+                setUsername(registerUsernameInputAsLowercase);
                 setIsUsernameRegisteredSuccessfully(true);
                 navigate('/home');
             })
@@ -120,7 +120,7 @@ export default function Index( {users, setUsers} ) {
                 return user.username === logInUsernameInputAsLowercase;
             })
             if (matchingUser[0].password === logInPasswordInput) {
-                setUser(logInUsernameInputAsLowercase);
+                setUsername(logInUsernameInputAsLowercase);
                 setIsLogInPasswordCorrect(true);
                 setUserLoggedInSuccessfully(true);
                 navigate('/home');
