@@ -13,7 +13,9 @@ export default function SinglePost( {users, setUsers} ) {
     const [ commentInput, setCommentInput ] = useState( "" );
     const [ comments, setComments ] = useState( [] );
     const [ isCommentPostedSuccessfully, setIsCommentPostedSuccessfully ] = useState( null );
-    const [ areCommentsLoading, setAreCommentsLoading ] = useState(true);
+    const [ areCommentsLoading, setAreCommentsLoading ] = useState( true );
+    const [ isPostLiked, setIsPostLiked ] = useState( false );
+    // const [ likes, setLikes ] = useState( 0 );
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -40,7 +42,7 @@ export default function SinglePost( {users, setUsers} ) {
             .catch((error) => {
                 console.log(error);
             })
-    }, [])
+    }, [isPostLiked])
 
     useEffect(() => {
         api.getUsers()
@@ -76,10 +78,6 @@ export default function SinglePost( {users, setUsers} ) {
 
     function onClickSubmitCommentButton() {
         setIsCommentPostedSuccessfully(null);
-        console.log(post_id, "<------ post_id");
-        console.log(username, "<------ username");
-        console.log(commentInput, "<------ commentInput");
-        console.log(Date.now(), "<------ Date.now()");
         api.postComment(post_id, username, commentInput, Date.now())
             .then((response) => {
                 setIsCommentPostedSuccessfully(true);
@@ -91,7 +89,51 @@ export default function SinglePost( {users, setUsers} ) {
             })
     }
 
-    // console.log(comments, "<---- comments");
+    function updateLikes(postId, body, likes, imageUrl) {
+        api.editPost(postId, body, likes, imageUrl)
+            .then((response) => {
+                if (!isPostLiked) {
+                    setIsPostLiked(true);
+                } else {
+                    setIsPostLiked(false);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    function onClickLikePost() {
+        console.log(post, "<----- post");
+        if (!isPostLiked) {
+            console.log("Post is not liked")
+            console.log(post_id, "<------- post_id")
+            console.log(post[0].body, "<------- post body")
+            console.log(post[0].likes, "<------- post likes");
+            console.log(post[0].image_url, "<------- post image url");
+            updateLikes(post_id, post[0].body, post[0].likes + 1, post[0].image_url);
+        } else {
+            console.log("Post is liked")
+            updateLikes(post_id, post[0].body, post[0].likes - 1, post[0].image_url);
+        }
+        // if (!isPostLiked) {
+        //     setIsPostLiked(true);
+        //     setLikes((currentLikes) => {
+        //         updateLikes(currentLikes + 1);
+        //         return currentLikes + 1;
+        //     })
+        //     console.log(likes, "<----- likes");
+        // } else {
+        //     setIsPostLiked(false);
+        //     setLikes((currentLikes) => {
+        //         updateLikes(currentLikes - 1);
+        //         return currentLikes - 1;
+        //     })
+        // }
+    }
+
+    // console.log(post, "<---- post");
+    // console.log(likes, "<---- likes");
 
     return (
         <main id="single-post">
@@ -100,7 +142,7 @@ export default function SinglePost( {users, setUsers} ) {
             <p>{post[0]?.username}</p>
             <p>{post[0]?.body}</p>
             {post[0]?.image_url ? <img src={post[0]?.image_url}></img> : null}            
-            <p>&#x2665; {post[0]?.likes}</p>
+            <p onClick={onClickLikePost} className="like">&#x2665; {post[0]?.likes}</p>
             <p>{new Date(parseInt(post[0]?.timestamp)).toLocaleString()}</p>
 
             <h2>Post a Comment</h2>

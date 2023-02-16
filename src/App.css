@@ -71,4 +71,7 @@ textarea {
   background: orange;
 }
 
+.like {
+  cursor: pointer;
+}
 
