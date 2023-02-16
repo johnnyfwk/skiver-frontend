@@ -43,3 +43,11 @@ export function getCommentsByPostId(postId) {
             return response.data.comments;
         })
 }
+
+export function postComment(post_id, owner, body, timestamp) {
+    return skiverApiBaseUrl
+        .post('/comments', {post_id, owner, body, timestamp})
+        .then((response) => {
+            return response;
+        })
+}

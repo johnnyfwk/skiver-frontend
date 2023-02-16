@@ -11,7 +11,7 @@ export default function PostCard( {post, users} ) {
             <div>{post.username}</div>
             <div>{post.body}</div>
             {post.image_url ? <img src={post.image_url} alt="image"></img> : null}            
-            <div>Likes: {post.likes}</div>
+            <div>&#x2665; {post.likes}</div>
             <div>{new Date(parseInt(post.timestamp)).toLocaleString()}</div>
         </Link>
     )

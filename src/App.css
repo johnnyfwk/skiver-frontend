@@ -25,6 +25,8 @@ footer {
 
 nav {
   background: #cecece;
+  display: flex;
+  justify-content: space-between;
 }
 
 main {
@@ -68,4 +70,5 @@ textarea {
 .comment-card  {
   background: orange;
 }
+
 

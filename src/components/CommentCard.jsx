@@ -1,7 +1,4 @@
 export default function CommentCard( {comment, users} ) {
-    console.log(comment, "<---- comment")
-    console.log(users, "<---- users")
-
     const userAccount = users.filter((user) => {
         return user.username === comment.owner;
     })

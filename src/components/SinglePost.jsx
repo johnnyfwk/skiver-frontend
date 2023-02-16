@@ -12,6 +12,8 @@ export default function SinglePost( {users, setUsers} ) {
     const [ postOwner, setPostOwner ] = useState( [] );
     const [ commentInput, setCommentInput ] = useState( "" );
     const [ comments, setComments ] = useState( [] );
+    const [ isCommentPostedSuccessfully, setIsCommentPostedSuccessfully ] = useState( null );
+    const [ areCommentsLoading, setAreCommentsLoading ] = useState(true);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -51,14 +53,17 @@ export default function SinglePost( {users, setUsers} ) {
     }, [])
 
     useEffect(() => {
+        setAreCommentsLoading(true);
         api.getCommentsByPostId(post_id)
             .then((response) => {
                 setComments(response);
+                setAreCommentsLoading(false);
             })
             .catch((error) => {
                 console.log(error);
+                setAreCommentsLoading(false);
             })
-    }, [])
+    }, [isCommentPostedSuccessfully])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -66,10 +71,24 @@ export default function SinglePost( {users, setUsers} ) {
 
     function onChangeCommentInput(event) {
         setCommentInput(event.target.value);
+        setIsCommentPostedSuccessfully(null);
     }
 
     function onClickSubmitCommentButton() {
+        setIsCommentPostedSuccessfully(null);
+        console.log(post_id, "<------ post_id");
+        console.log(username, "<------ username");
         console.log(commentInput, "<------ commentInput");
+        console.log(Date.now(), "<------ Date.now()");
+        api.postComment(post_id, username, commentInput, Date.now())
+            .then((response) => {
+                setIsCommentPostedSuccessfully(true);
+                setCommentInput("");
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsCommentPostedSuccessfully(false);
+            })
     }
 
     // console.log(comments, "<---- comments");
@@ -81,12 +100,17 @@ export default function SinglePost( {users, setUsers} ) {
             <p>{post[0]?.username}</p>
             <p>{post[0]?.body}</p>
             {post[0]?.image_url ? <img src={post[0]?.image_url}></img> : null}            
-            <p>Likes: {post[0]?.likes}</p>
+            <p>&#x2665; {post[0]?.likes}</p>
             <p>{new Date(parseInt(post[0]?.timestamp)).toLocaleString()}</p>
 
             <h2>Post a Comment</h2>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="comment">Leave a comment for this post:</label>
+                {isCommentPostedSuccessfully === null
+                    ? null
+                    : isCommentPostedSuccessfully === true
+                        ? <p className="success">Comment was posted successfully.</p>
+                        : <p className="error">Comment could not be posted.</p>}
+
                 <textarea
                     id="input-comment"
                     name="input-comment"
@@ -97,7 +121,13 @@ export default function SinglePost( {users, setUsers} ) {
                 <button onClick={onClickSubmitCommentButton} disabled={commentInput.length === 0}>Submit Comment</button>
             </form>
 
-            <h2>Comments</h2>
+            <h2>Comments ({comments.length})</h2>
+
+            {areCommentsLoading ? <p>Loading comments...</p> : null}
+
+            {comments.length === 0
+                ? <p>No one has posted any comments yet. Be the first to share your thoughts on this post.</p>
+                : null}
 
             <div id="comment-cards">
                 {comments.map((comment) => {
