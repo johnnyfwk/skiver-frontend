@@ -35,8 +35,6 @@ export default function Home( {users, setUsers, posts, setPosts} ) {
         })
     }, [])
 
-    console.log(users, "<------- users");
-
     return (
         <main>
             <h1>Welcome {username}!</h1>

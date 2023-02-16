@@ -35,3 +35,11 @@ export function createAPost(username, body, likes, image_url, timestamp) {
             return response;
         })
 }
+
+export function getCommentsByPostId(postId) {
+    return skiverApiBaseUrl
+        .get(`/posts/${postId}/comments`)
+        .then((response) => {
+            return response.data.comments;
+        })
+}

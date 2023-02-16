@@ -24,7 +24,7 @@ function App() {
         <Route path="/home" element={<Home users={users} setUsers={setUsers} posts={posts} setPosts={setPosts}/>}/>
         <Route path="/profile" element={<Profile />}/>
         <Route path="/create-a-post" element={<CreateAPost />}/>
-        <Route path="/posts/:post_id" element={<SinglePost />}/>
+        <Route path="/posts/:post_id" element={<SinglePost users={users} setUsers={setUsers}/>}/>
         <Route path="/*" element={<Error404 />}/>
       </Routes>
       <Footer />

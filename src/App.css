@@ -58,11 +58,14 @@ textarea {
   width: 100%;
 }
 
-#post-cards {
+#post-cards,
+#comment-cards {
   display: grid;
   gap: 50px;
 }
 
-.post-card {
+.post-card,
+.comment-card  {
   background: orange;
 }
+

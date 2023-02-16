@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import * as api from '../api';
+import CommentCard from './CommentCard';
 
-export default function SinglePost() {
+export default function SinglePost( {users, setUsers} ) {
     const { username, setUsername } = useContext( UserContext );
     const { post_id } = useParams();
-    const [ post, setPost ] = useState( {} );
-    const [ postOwner, setPostOwner ] = useState( {} );
+    const [ post, setPost ] = useState( [] );
+    const [ postOwner, setPostOwner ] = useState( [] );
     const [ commentInput, setCommentInput ] = useState( "" );
+    const [ comments, setComments ] = useState( [] );
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -38,6 +40,26 @@ export default function SinglePost() {
             })
     }, [])
 
+    useEffect(() => {
+        api.getUsers()
+        .then((response) => {
+            setUsers(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }, [])
+
+    useEffect(() => {
+        api.getCommentsByPostId(post_id)
+            .then((response) => {
+                setComments(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [])
+
     function handleSubmit(event) {
         event.preventDefault();
     }
@@ -49,6 +71,8 @@ export default function SinglePost() {
     function onClickSubmitCommentButton() {
         console.log(commentInput, "<------ commentInput");
     }
+
+    // console.log(comments, "<---- comments");
 
     return (
         <main id="single-post">
@@ -74,6 +98,12 @@ export default function SinglePost() {
             </form>
 
             <h2>Comments</h2>
+
+            <div id="comment-cards">
+                {comments.map((comment) => {
+                    return <CommentCard key={comment.comment_id} comment={comment} users={users}/>
+                })}
+            </div>
         </main>
     )
 }
