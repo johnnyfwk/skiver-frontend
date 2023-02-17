@@ -53,6 +53,7 @@ export function postComment(post_id, owner, body, timestamp) {
 }
 
 export function editPost(postId, body, likes, image_url) {
+    console.log(image_url, "<------ image_url");
     return skiverApiBaseUrl
         .patch(`/posts/${postId}`, {body, likes, image_url})
         .then((response) => {

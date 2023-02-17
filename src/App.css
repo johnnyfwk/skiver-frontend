@@ -5,7 +5,7 @@
 
 img {
   width: 100%;
-  max-width: 200px;
+  max-width: 700px;
 }
 
 p,
@@ -66,9 +66,51 @@ textarea {
   gap: 50px;
 }
 
-.post-card,
+.post-card {
+  background: lightgrey;
+  display: grid;
+}
+
+#post-card-owner-profile-image-and-username,
+#post-card-likes-and-timestamp,
+#single-post-owner-profile-image-and-username,
+#single-post-likes-and-timestamp {
+  display: flex;
+  gap: 20px;
+}
+
+#post-card-owner-profile-image,
+#single-post-owner-profile-image,
+#comment-card-owner-profile-image {
+  max-width: 75px;
+}
+
+#single-post-info-and-body {
+  background: yellow;
+}
+
 .comment-card  {
-  background: orange;
+  background: lightgrey;
+  display: grid;
+  grid-template-areas: 
+    'commentCardInfo commentCardBody'
+    'commentCardEditAndDeleteButtons commentCardEditAndDeleteButtons'
+  ;
+  grid-template-columns: 150px auto;
+}
+
+#comment-card-info {
+  background: grey;
+  grid-area: commentCardInfo;
+}
+
+#comment-card-body {
+  background: yellow;
+  grid-area: commentCardBody;
+}
+
+#comment-card-edit-and-delete-buttons {
+  grid-area: commentCardEditAndDeleteButtons;
 }
 
 .like {

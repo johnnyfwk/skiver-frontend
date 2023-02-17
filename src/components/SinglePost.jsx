@@ -16,7 +16,15 @@ export default function SinglePost( {users, setUsers} ) {
     const [ areCommentsLoading, setAreCommentsLoading ] = useState( true );
     const [ isPostLiked, setIsPostLiked ] = useState( false );
     const [ isPostDeletedSuccessfully, setIsPostDeletedSuccessfully ] = useState( null );
+    const [ isEditPostButtonVisible, setIsEditPostButtonVisible ] = useState( true );
+    const [ isCancelEditPostButtonVisible, setIsCancelEditPostButtonVisible ] = useState( false );
+    const [ isUpdatePostButtonVisible, setIsUpdatePostButtonVisible ] = useState( false );
+    const [ isDeletePostButtonVisible, setIsDeletePostButtonVisible ] = useState( true );
     const [ isDeletePostConfirmationMessageVisible, setIsDeletePostConfirmationMessageVisible ] = useState( false );
+    const [ editPostBodyTextInput, setEditPostBodyTextInput ] = useState( "" );
+    const [ editPostBodyImageUrlInput, setEditPostBodyImageUrlInput ] = useState( "" );
+    const [ isEditPostBodyImageUrlInputValid, setIsEditPostBodyImageUrlInputValid ] = useState( null );
+    const [ isEditPostSuccessful, setIsEditPostSuccessful ] = useState( null );
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -32,6 +40,10 @@ export default function SinglePost( {users, setUsers} ) {
                     return element.post_id === parseInt(post_id);
                 })
                 setPost(selectedPost);
+                setEditPostBodyTextInput(selectedPost[0].body);
+                if (selectedPost[0].image_url) {
+                    setEditPostBodyImageUrlInput(selectedPost[0].image_url);
+                }
                 api.getUsers()
                     .then((response) => {
                         const selectedPostOwner = response.filter((element) => {
@@ -43,7 +55,7 @@ export default function SinglePost( {users, setUsers} ) {
             .catch((error) => {
                 console.log(error);
             })
-    }, [isPostLiked])
+    }, [isPostLiked, isEditPostSuccessful])
 
     useEffect(() => {
         api.getUsers()
@@ -82,11 +94,17 @@ export default function SinglePost( {users, setUsers} ) {
         api.postComment(post_id, username, commentInput, Date.now())
             .then((response) => {
                 setIsCommentPostedSuccessfully(true);
+                setTimeout(() => {
+                    setIsCommentPostedSuccessfully(null);
+                }, 3000);
                 setCommentInput("");
             })
             .catch((error) => {
                 console.log(error);
                 setIsCommentPostedSuccessfully(false);
+                setTimeout(() => {
+                    setIsCommentPostedSuccessfully(null);
+                }, 3000);
             })
     }
 
@@ -112,13 +130,74 @@ export default function SinglePost( {users, setUsers} ) {
         }
     }
 
+    function onClickEditPostButton() {
+        setIsEditPostButtonVisible(false);
+        setIsDeletePostButtonVisible(false);
+        setIsCancelEditPostButtonVisible(true);
+        setIsUpdatePostButtonVisible(true);
+    }
+
+    function onChangeEditPostBodyTextInput(event) {
+        setEditPostBodyTextInput(event.target.value);
+    }
+
+    function onChangeEditPostBodyImageUrlInput(event) {
+        setEditPostBodyImageUrlInput(event.target.value);
+    }
+
+    function onClickCancelEditPostButton() {
+        setIsCancelEditPostButtonVisible(false);
+        setIsUpdatePostButtonVisible(false);
+        setIsEditPostButtonVisible(true);
+        setIsDeletePostButtonVisible(true);
+        setEditPostBodyTextInput(post[0].body);
+        setEditPostBodyImageUrlInput(post[0].image_url);
+    }
+
+    function onClickUpdatePostButton() {
+        setIsEditPostBodyImageUrlInputValid(null);
+        setIsEditPostSuccessful(null);
+        const isUrl = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
+        if (isUrl.test(editPostBodyImageUrlInput) || editPostBodyImageUrlInput.length === 0) {
+            setIsEditPostBodyImageUrlInputValid(true);
+            api.editPost(post_id, editPostBodyTextInput, post[0].likes, editPostBodyImageUrlInput)
+                .then((response) => {
+                    setIsEditPostSuccessful(true);
+                    setTimeout(() => {
+                        setIsEditPostSuccessful(null);
+                    }, 3000);
+                    setIsUpdatePostButtonVisible(false);
+                    setIsCancelEditPostButtonVisible(false);
+                    setIsEditPostButtonVisible(true);
+                    setIsDeletePostButtonVisible(true);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setIsEditPostSuccessful(false);
+                    setTimeout(() => {
+                        setIsEditPostSuccessful(null);
+                    }, 3000);
+                })
+        } else {
+            console.log("image url is not valid");
+            setIsEditPostBodyImageUrlInputValid(false);
+            setTimeout(() => {
+                setIsEditPostBodyImageUrlInputValid(null);
+            }, 3000);
+        }
+    }
+
     function onClickDeletePostButton() {
+        setIsDeletePostButtonVisible(false);
         setIsDeletePostConfirmationMessageVisible(true);
+        setIsEditPostButtonVisible(false);
         setIsPostDeletedSuccessfully(null);
     }
 
     function onClickDeletePostNo() {
         setIsDeletePostConfirmationMessageVisible(false);
+        setIsEditPostButtonVisible(true);
+        setIsDeletePostButtonVisible(true);
     }
 
     function onClickDeletePostYes() {
@@ -138,26 +217,77 @@ export default function SinglePost( {users, setUsers} ) {
     return (
         <main id="single-post">
             <h1>Single Post</h1>
-            <img src={postOwner[0]?.profile_image_url}></img>
-            <p>{post[0]?.username}</p>
-            <p>{post[0]?.body}</p>
-            {post[0]?.image_url ? <img src={post[0]?.image_url}></img> : null}            
-            <p onClick={onClickLikePost} className="like">&#x2665; {post[0]?.likes}</p>
-            <p>{new Date(parseInt(post[0]?.timestamp)).toLocaleString()}</p>
+            <div id="single-post-info-and-body">
+                <div id="single-post-owner-profile-image-and-username">
+                    <img id="single-post-owner-profile-image"src={postOwner[0]?.profile_image_url}></img>
+                    <div id="single-post-owner-username">{post[0]?.username}</div>
+                </div>
+                <div>
+                    {isCancelEditPostButtonVisible
+                        ? <textarea
+                            id="edit-post-body-text-input"
+                            name="edit-post-body-text-input"
+                            value={editPostBodyTextInput}
+                            onChange={onChangeEditPostBodyTextInput}>                            
+                          </textarea>
+                        : <p id="single-post-body-text">{post[0]?.body}</p>}
 
+                    {isCancelEditPostButtonVisible
+                        ? <input
+                            type="text"
+                            id="edit-post-body-image-url-input"
+                            name="edit-post-body-image-url-input"
+                            className="url-input"
+                            value={editPostBodyImageUrlInput}
+                            onChange={onChangeEditPostBodyImageUrlInput}>                            
+                          </input>
+                        : post[0]?.image_url
+                            ? <img id="single-post-body-image" src={post[0]?.image_url}></img>
+                            : null}            
+                </div>
+                <div id="single-post-likes-and-timestamp">
+                    <div id="single-post-timestamp">{new Date(parseInt(post[0]?.timestamp)).toLocaleString()}</div>
+                    <div id="single-post-likes"onClick={onClickLikePost} className="like">&#x2665; {post[0]?.likes}</div>                    
+                </div>
+            </div>
+
+            <br />
+
+            {isEditPostBodyImageUrlInputValid === null || isEditPostBodyImageUrlInputValid === true
+                ? null
+                : <div className="error">Please enter a valid URL.</div>}
+
+            {isEditPostSuccessful === null
+                ? null
+                : isEditPostSuccessful === true
+                    ? <div className="success">Post was updated.</div>
+                    : <div className="error">Post could not be updated.</div>}
+            
+            {post[0]?.username === username && isEditPostButtonVisible
+                ? <button onClick={onClickEditPostButton}>Edit Post</button>
+                : null}
+            
+            {isCancelEditPostButtonVisible
+                ? <button onClick={onClickCancelEditPostButton}>Cancel Edit</button>
+                : null}
+
+            {isUpdatePostButtonVisible
+                ? <button onClick={onClickUpdatePostButton} disabled={editPostBodyTextInput.length === 0}>Update Post</button>
+                : null}
+
+            {post[0]?.username === username && isDeletePostButtonVisible
+                ? <button onClick={onClickDeletePostButton}>Delete Post</button>
+                : null}
+            
             {isDeletePostConfirmationMessageVisible
                 ? <div>
-                    <p>Delete post?</p>
+                    <div>Delete post?</div>
                     <button onClick={onClickDeletePostYes}>Yes</button>
                     <button onClick={onClickDeletePostNo}>No</button>                    
                   </div>
                 : null}
 
-            {post[0]?.username === username && !isDeletePostConfirmationMessageVisible
-                ? <button onClick={onClickDeletePostButton}>Delete Post</button>
-                : null}
-
-            {isPostDeletedSuccessfully ? <p className="success">Your post has been deleted.</p> : null}
+            {isPostDeletedSuccessfully ? <p className="success">Your post is being deleted.</p> : null}
 
             <h2>Post a Comment</h2>
             <form onSubmit={handleSubmit}>
