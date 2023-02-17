@@ -15,7 +15,7 @@ export default function SinglePost( {users, setUsers} ) {
     const [ isCommentPostedSuccessfully, setIsCommentPostedSuccessfully ] = useState( null );
     const [ areCommentsLoading, setAreCommentsLoading ] = useState( true );
     const [ isPostLiked, setIsPostLiked ] = useState( false );
-    // const [ likes, setLikes ] = useState( 0 );
+    const [ isPostDeletedSuccessfully, setIsPostDeletedSuccessfully ] = useState( null );
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -104,36 +104,27 @@ export default function SinglePost( {users, setUsers} ) {
     }
 
     function onClickLikePost() {
-        console.log(post, "<----- post");
         if (!isPostLiked) {
-            console.log("Post is not liked")
-            console.log(post_id, "<------- post_id")
-            console.log(post[0].body, "<------- post body")
-            console.log(post[0].likes, "<------- post likes");
-            console.log(post[0].image_url, "<------- post image url");
             updateLikes(post_id, post[0].body, post[0].likes + 1, post[0].image_url);
         } else {
-            console.log("Post is liked")
             updateLikes(post_id, post[0].body, post[0].likes - 1, post[0].image_url);
         }
-        // if (!isPostLiked) {
-        //     setIsPostLiked(true);
-        //     setLikes((currentLikes) => {
-        //         updateLikes(currentLikes + 1);
-        //         return currentLikes + 1;
-        //     })
-        //     console.log(likes, "<----- likes");
-        // } else {
-        //     setIsPostLiked(false);
-        //     setLikes((currentLikes) => {
-        //         updateLikes(currentLikes - 1);
-        //         return currentLikes - 1;
-        //     })
-        // }
     }
 
-    // console.log(post, "<---- post");
-    // console.log(likes, "<---- likes");
+    function onClickDeletePostButton() {
+        setIsPostDeletedSuccessfully(null);
+        api.deletePost(post_id)
+            .then((response) => {
+                setIsPostDeletedSuccessfully(true);
+                setTimeout(() => {
+                    navigate('/');
+                }, 3000);                
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsPostDeletedSuccessfully(false);
+            })
+    }
 
     return (
         <main id="single-post">
@@ -144,6 +135,8 @@ export default function SinglePost( {users, setUsers} ) {
             {post[0]?.image_url ? <img src={post[0]?.image_url}></img> : null}            
             <p onClick={onClickLikePost} className="like">&#x2665; {post[0]?.likes}</p>
             <p>{new Date(parseInt(post[0]?.timestamp)).toLocaleString()}</p>
+            {post[0]?.username === username ? <button onClick={onClickDeletePostButton}>Delete Post</button> : null}
+            {isPostDeletedSuccessfully ? <span className="success">Your post has been deleted.</span> : null}
 
             <h2>Post a Comment</h2>
             <form onSubmit={handleSubmit}>
@@ -173,7 +166,7 @@ export default function SinglePost( {users, setUsers} ) {
 
             <div id="comment-cards">
                 {comments.map((comment) => {
-                    return <CommentCard key={comment.comment_id} comment={comment} users={users}/>
+                    return <CommentCard key={comment.comment_id} comment={comment} users={users} username={username}/>
                 })}
             </div>
         </main>

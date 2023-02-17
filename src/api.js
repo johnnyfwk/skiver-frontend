@@ -59,3 +59,11 @@ export function editPost(postId, body, likes, image_url) {
             return response;
         })
 }
+
+export function deletePost(postId) {
+    return skiverApiBaseUrl
+        .delete(`/posts/${postId}`)
+        .then((response) => {
+            return response;
+        })
+}

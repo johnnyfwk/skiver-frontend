@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function PostCard( {post, users} ) {
+export default function PostCard( {post, users, username} ) {
     const userAccount = users.filter((user) => {
         return user.username === post.username;
     })
@@ -13,6 +13,7 @@ export default function PostCard( {post, users} ) {
             {post.image_url ? <img src={post.image_url} alt="image"></img> : null}            
             <div>&#x2665; {post.likes}</div>
             <div>{new Date(parseInt(post.timestamp)).toLocaleString()}</div>
+            
         </Link>
     )
 }
