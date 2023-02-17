@@ -12,7 +12,7 @@ export default function PostCard( {post, users} ) {
                 <div id="post-card-owner-username">{post.username}</div>
             </div>
             <div id="post-card-body">
-                <p id="post-card-body-text">{post.body}</p>
+                <div id="post-card-body-text">{post.body}</div>
                 {post.image_url ? <img id="post-card-body-image" src={post.image_url} alt="image"></img> : null}
             </div>               
             <div id="post-card-likes-and-timestamp">

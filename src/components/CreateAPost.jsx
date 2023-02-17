@@ -40,11 +40,16 @@ export default function CreateAPost() {
             api.createAPost(username, postTextInput, 0, imageUrlInput, Date.now())
                 .then((response) => {
                     setIsPostSubmittedSuccessfully(true);
-                    navigate('/home');
+                    setTimeout(() => {
+                        navigate('/home');
+                    }, 3000)
                 })
                 .catch((error) => {
                     console.log();
                     setIsPostSubmittedSuccessfully(false);
+                    setTimeout(() => {
+                        setIsPostSubmittedSuccessfully(null);
+                    }, 3000)
                 })
         } else {
             setIsImageURlInputValid(false);
@@ -83,9 +88,11 @@ export default function CreateAPost() {
 
                 <br /><br />
 
-                {isPostSubmittedSuccessfully === null || isPostSubmittedSuccessfully === true
+                {isPostSubmittedSuccessfully === null
                     ? null
-                    : <p className="error">Post could not be submitted.</p>}
+                    : isPostSubmittedSuccessfully === true
+                        ? <p className="success">Post is being created.</p>
+                        : <p className="error">Post could not be created.</p>}
 
                 <button disabled={postTextInput.length === 0} onClick={onClickCreateAPostButton}>Create Post</button>
             </form>

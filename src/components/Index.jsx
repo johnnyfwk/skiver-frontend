@@ -82,8 +82,8 @@ export default function Index( {users, setUsers} ) {
         setIsProfileImageUrlInputValid(null);   
         const registerUsernameInputAsLowercase = registerUsernameInput.toLowerCase();
 
-        const isUrl = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
-        if (isUrl.test(registerProfileImageUrlInput) || registerProfileImageUrlInput.length === 0) {
+        const isImageUrl = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
+        if (isImageUrl.test(registerProfileImageUrlInput) || registerProfileImageUrlInput.length === 0) {
             setIsProfileImageUrlInputValid(true);
             api.registerUser(registerUsernameInputAsLowercase, registerPasswordInput, registerProfileImageUrlInput)
             .then((response) => {

@@ -25,6 +25,8 @@ export default function SinglePost( {users, setUsers} ) {
     const [ editPostBodyImageUrlInput, setEditPostBodyImageUrlInput ] = useState( "" );
     const [ isEditPostBodyImageUrlInputValid, setIsEditPostBodyImageUrlInputValid ] = useState( null );
     const [ isEditPostSuccessful, setIsEditPostSuccessful ] = useState( null );
+    const [ isCommentEditedSuccessfully, setIsCommentEditedSuccessfully ] = useState( null );
+    const [ isCommentDeletedSuccessfully, setIsCommentDeletedSuccessfully ] = useState( null );
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -78,7 +80,7 @@ export default function SinglePost( {users, setUsers} ) {
                 console.log(error);
                 setAreCommentsLoading(false);
             })
-    }, [isCommentPostedSuccessfully])
+    }, [isCommentPostedSuccessfully, isCommentEditedSuccessfully, isCommentDeletedSuccessfully, isPostDeletedSuccessfully])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -157,8 +159,8 @@ export default function SinglePost( {users, setUsers} ) {
     function onClickUpdatePostButton() {
         setIsEditPostBodyImageUrlInputValid(null);
         setIsEditPostSuccessful(null);
-        const isUrl = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
-        if (isUrl.test(editPostBodyImageUrlInput) || editPostBodyImageUrlInput.length === 0) {
+        const isImageUrl = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
+        if (isImageUrl.test(editPostBodyImageUrlInput) || editPostBodyImageUrlInput.length === 0) {
             setIsEditPostBodyImageUrlInputValid(true);
             api.editPost(post_id, editPostBodyTextInput, post[0].likes, editPostBodyImageUrlInput)
                 .then((response) => {
@@ -177,9 +179,12 @@ export default function SinglePost( {users, setUsers} ) {
                     setTimeout(() => {
                         setIsEditPostSuccessful(null);
                     }, 3000);
+                    setIsUpdatePostButtonVisible(false);
+                    setIsCancelEditPostButtonVisible(false);
+                    setIsEditPostButtonVisible(true);
+                    setIsDeletePostButtonVisible(true);
                 })
         } else {
-            console.log("image url is not valid");
             setIsEditPostBodyImageUrlInputValid(false);
             setTimeout(() => {
                 setIsEditPostBodyImageUrlInputValid(null);
@@ -201,16 +206,28 @@ export default function SinglePost( {users, setUsers} ) {
     }
 
     function onClickDeletePostYes() {
+        setIsPostDeletedSuccessfully(null);
         api.deletePost(post_id)
             .then((response) => {
                 setIsPostDeletedSuccessfully(true);
+                comments.forEach((comment) => {
+                    api.deleteComment(comment.comment_id)
+                })                            
+            })
+            .then(() => {
                 setTimeout(() => {
                     navigate('/');
-                }, 3000);                
+                }, 3000);    
             })
             .catch((error) => {
                 console.log(error);
                 setIsPostDeletedSuccessfully(false);
+                setTimeout(() => {
+                    setIsPostDeletedSuccessfully(null);
+                }, 3000);       
+                setIsDeletePostConfirmationMessageVisible(false);
+                setIsEditPostButtonVisible(true);
+                setIsDeletePostButtonVisible(true);
             })
     }
 
@@ -230,7 +247,7 @@ export default function SinglePost( {users, setUsers} ) {
                             value={editPostBodyTextInput}
                             onChange={onChangeEditPostBodyTextInput}>                            
                           </textarea>
-                        : <p id="single-post-body-text">{post[0]?.body}</p>}
+                        : <div id="single-post-body-text">{post[0]?.body}</div>}
 
                     {isCancelEditPostButtonVisible
                         ? <input
@@ -255,14 +272,20 @@ export default function SinglePost( {users, setUsers} ) {
 
             {isEditPostBodyImageUrlInputValid === null || isEditPostBodyImageUrlInputValid === true
                 ? null
-                : <div className="error">Please enter a valid URL.</div>}
+                : <div className="error">Please enter a valid image URL.</div>}
 
             {isEditPostSuccessful === null
                 ? null
                 : isEditPostSuccessful === true
-                    ? <div className="success">Post was updated.</div>
-                    : <div className="error">Post could not be updated.</div>}
+                    ? <p className="success">Post was updated.</p>
+                    : <p className="error">Post could not be updated.</p>}
             
+            {isPostDeletedSuccessfully === null
+                ? null
+                : isPostDeletedSuccessfully === true
+                    ? <p className="success">Post is being deleted.</p>
+                    : <p className="error">Post could not be deleted.</p>}
+
             {post[0]?.username === username && isEditPostButtonVisible
                 ? <button onClick={onClickEditPostButton}>Edit Post</button>
                 : null}
@@ -281,13 +304,11 @@ export default function SinglePost( {users, setUsers} ) {
             
             {isDeletePostConfirmationMessageVisible
                 ? <div>
-                    <div>Delete post?</div>
-                    <button onClick={onClickDeletePostYes}>Yes</button>
-                    <button onClick={onClickDeletePostNo}>No</button>                    
+                    <p>Delete post?</p>                    
+                    <button onClick={onClickDeletePostNo}>No</button>
+                    <button onClick={onClickDeletePostYes}>Yes</button>                
                   </div>
                 : null}
-
-            {isPostDeletedSuccessfully ? <p className="success">Your post is being deleted.</p> : null}
 
             <h2>Post a Comment</h2>
             <form onSubmit={handleSubmit}>
@@ -315,9 +336,30 @@ export default function SinglePost( {users, setUsers} ) {
                 ? <p>No one has posted any comments yet. Be the first to share your thoughts on this post.</p>
                 : null}
 
+            {isCommentEditedSuccessfully === null
+                ? null
+                : isCommentEditedSuccessfully === true
+                    ? <p className="success">Comment has been updated.</p>
+                    : <p className="error">Comment could not be updated.</p>}
+
+            {isCommentDeletedSuccessfully === null
+                ? null
+                : isCommentDeletedSuccessfully === true
+                    ? <p className="success">Comment has been deleted.</p>
+                    : <p className="error">Comment could not be deleted.</p>}
+
             <div id="comment-cards">
                 {comments.map((comment) => {
-                    return <CommentCard key={comment.comment_id} comment={comment} users={users} username={username}/>
+                    return <CommentCard
+                        key={comment.comment_id}
+                        comment={comment}
+                        users={users}
+                        username={username}
+                        isCommentEditedSuccessfully={isCommentEditedSuccessfully}
+                        setIsCommentEditedSuccessfully={setIsCommentEditedSuccessfully}
+                        isCommentDeletedSuccessfully={isCommentDeletedSuccessfully}
+                        setIsCommentDeletedSuccessfully={setIsCommentDeletedSuccessfully}
+                    />
                 })}
             </div>
         </main>

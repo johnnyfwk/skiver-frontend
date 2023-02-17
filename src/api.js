@@ -53,7 +53,6 @@ export function postComment(post_id, owner, body, timestamp) {
 }
 
 export function editPost(postId, body, likes, image_url) {
-    console.log(image_url, "<------ image_url");
     return skiverApiBaseUrl
         .patch(`/posts/${postId}`, {body, likes, image_url})
         .then((response) => {
@@ -64,6 +63,22 @@ export function editPost(postId, body, likes, image_url) {
 export function deletePost(postId) {
     return skiverApiBaseUrl
         .delete(`/posts/${postId}`)
+        .then((response) => {
+            return response;
+        })
+}
+
+export function editComment(commentId, body) {
+    return skiverApiBaseUrl
+        .patch(`/comments/${commentId}`, {body})
+        .then((response) => {
+            return response;
+        })
+}
+
+export function deleteComment(commentId) {
+    return skiverApiBaseUrl
+        .delete(`/comments/${commentId}`)
         .then((response) => {
             return response;
         })
