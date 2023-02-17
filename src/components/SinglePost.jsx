@@ -16,6 +16,7 @@ export default function SinglePost( {users, setUsers} ) {
     const [ areCommentsLoading, setAreCommentsLoading ] = useState( true );
     const [ isPostLiked, setIsPostLiked ] = useState( false );
     const [ isPostDeletedSuccessfully, setIsPostDeletedSuccessfully ] = useState( null );
+    const [ isDeletePostConfirmationMessageVisible, setIsDeletePostConfirmationMessageVisible ] = useState( false );
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -112,7 +113,15 @@ export default function SinglePost( {users, setUsers} ) {
     }
 
     function onClickDeletePostButton() {
+        setIsDeletePostConfirmationMessageVisible(true);
         setIsPostDeletedSuccessfully(null);
+    }
+
+    function onClickDeletePostNo() {
+        setIsDeletePostConfirmationMessageVisible(false);
+    }
+
+    function onClickDeletePostYes() {
         api.deletePost(post_id)
             .then((response) => {
                 setIsPostDeletedSuccessfully(true);
@@ -135,8 +144,20 @@ export default function SinglePost( {users, setUsers} ) {
             {post[0]?.image_url ? <img src={post[0]?.image_url}></img> : null}            
             <p onClick={onClickLikePost} className="like">&#x2665; {post[0]?.likes}</p>
             <p>{new Date(parseInt(post[0]?.timestamp)).toLocaleString()}</p>
-            {post[0]?.username === username ? <button onClick={onClickDeletePostButton}>Delete Post</button> : null}
-            {isPostDeletedSuccessfully ? <span className="success">Your post has been deleted.</span> : null}
+
+            {isDeletePostConfirmationMessageVisible
+                ? <div>
+                    <p>Delete post?</p>
+                    <button onClick={onClickDeletePostYes}>Yes</button>
+                    <button onClick={onClickDeletePostNo}>No</button>                    
+                  </div>
+                : null}
+
+            {post[0]?.username === username && !isDeletePostConfirmationMessageVisible
+                ? <button onClick={onClickDeletePostButton}>Delete Post</button>
+                : null}
+
+            {isPostDeletedSuccessfully ? <p className="success">Your post has been deleted.</p> : null}
 
             <h2>Post a Comment</h2>
             <form onSubmit={handleSubmit}>

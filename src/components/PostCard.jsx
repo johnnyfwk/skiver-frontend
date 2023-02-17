@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function PostCard( {post, users, username} ) {
+export default function PostCard( {post, users} ) {
     const userAccount = users.filter((user) => {
         return user.username === post.username;
     })
