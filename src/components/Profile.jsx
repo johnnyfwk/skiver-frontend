@@ -192,36 +192,42 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
 
     function onClickConfirmDeleteAccountButton() {
         setIsUserDeletedSuccessfully(null);
-        // api.deleteUserByUsername(username)
-        //     .then((response) => {
-        //         api.deleteAllPostsByUsername(username)
-        //     })
-        //     .then((response) => {
-
-        //     })
-        //     .then(() => {
-        //         setIsUserDeletedSuccessfully(true);
-        //         setIsDeleteAccountConfirmationMessageVisible(false);
-        //         setIsDeleteAccountButtonVisible(true);
-        //         setIsEditProfileImageButtonVisible(true);
-        //         setTimeout(() => {
-        //             setUsername("");
-        //             navigate('/');         
-        //         }, 3000);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //         setIsUserDeletedSuccessfully(false);
-        //         setIsDeleteAccountConfirmationMessageVisible(false);
-        //         setIsDeleteAccountButtonVisible(true);
-        //         setIsEditProfileImageButtonVisible(true);
-        //         setTimeout(() => {
-        //             setIsUserDeletedSuccessfully(null);
-        //         }, 3000)
-        //     })
+        if (usersPosts) {
+            usersPosts.forEach((post) => {
+                api.deleteAllCommentsByPostId(post.post_id)
+                    .then((response) => {
+                        console.log(response);
+                    })
+            })
+            api.deleteAllCommentsByUsername(username)
+                .then(() => {
+                    api.deleteAllPostsByUsername(username)
+                })            
+                .then(() => {
+                    api.deleteUserByUsername(username)
+                })
+                .then(() => {
+                    setIsUserDeletedSuccessfully(true);
+                    setIsDeleteAccountConfirmationMessageVisible(false);
+                    setIsDeleteAccountButtonVisible(true);
+                    setIsEditProfileImageButtonVisible(true);
+                    setTimeout(() => {
+                        setUsername("");
+                        navigate('/');         
+                    }, 3000);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setIsUserDeletedSuccessfully(false);
+                    setIsDeleteAccountConfirmationMessageVisible(false);
+                    setIsDeleteAccountButtonVisible(true);
+                    setIsEditProfileImageButtonVisible(true);
+                    setTimeout(() => {
+                        setIsUserDeletedSuccessfully(null);
+                    }, 3000)
+                })
+        }
     }
-
-    // console.log(usersComments, "<------- usersComments")
     
     return (
         <main id="profile">

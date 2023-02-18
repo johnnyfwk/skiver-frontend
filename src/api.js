@@ -116,6 +116,14 @@ export function deleteAllCommentsByPostId(postId) {
         })
 }
 
+export function deleteAllCommentsByUsername(username) {
+    return skiverApiBaseUrl
+        .delete(`/users/${username}/comments`)
+        .then((response) => {
+            return response;
+        })
+}
+
 export function deleteUserByUsername(username) {
     return skiverApiBaseUrl
         .delete(`/users/${username}`)

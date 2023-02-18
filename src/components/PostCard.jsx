@@ -28,7 +28,5 @@ export default function PostCard( {post, users} ) {
                 <div id="post-card-likes">&#x2665; {post.likes}</div>
             </div>
         </Link>
-
-
     )
 }
