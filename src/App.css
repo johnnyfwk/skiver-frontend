@@ -116,3 +116,18 @@ textarea {
   cursor: pointer;
 }
 
+#profile-image {
+  max-width: 300px;
+}
+
+#profile-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  font-size: 1.5rem;
+}
+
+#profile-tabs div {
+  cursor: pointer;
+}
+

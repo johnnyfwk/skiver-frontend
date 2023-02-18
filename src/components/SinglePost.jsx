@@ -1,5 +1,5 @@
 import { UserContext } from '../contexts/User';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import * as api from '../api';
@@ -210,9 +210,10 @@ export default function SinglePost( {users, setUsers} ) {
         api.deletePost(post_id)
             .then((response) => {
                 setIsPostDeletedSuccessfully(true);
-                comments.forEach((comment) => {
-                    api.deleteComment(comment.comment_id)
-                })                            
+                setIsDeletePostConfirmationMessageVisible(false);
+                if (comments.length > 0) {
+                    api.deleteAllCommentsByPostId(post_id);
+                }                  
             })
             .then(() => {
                 setTimeout(() => {
@@ -236,8 +237,10 @@ export default function SinglePost( {users, setUsers} ) {
             <h1>Single Post</h1>
             <div id="single-post-info-and-body">
                 <div id="single-post-owner-profile-image-and-username">
-                    <img id="single-post-owner-profile-image"src={postOwner[0]?.profile_image_url}></img>
-                    <div id="single-post-owner-username">{post[0]?.username}</div>
+                    <Link to={`/profile/${post[0]?.username}`}>
+                        <img id="single-post-owner-profile-image"src={postOwner[0]?.profile_image_url}></img>
+                    </Link>                    
+                    <Link to={`/profile/${post[0]?.username}`} id="single-post-owner-username">{post[0]?.username}</Link>
                 </div>
                 <div>
                     {isCancelEditPostButtonVisible

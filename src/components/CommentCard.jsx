@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import * as api from '../api';
 
 export default function CommentCard( {comment, users, username, setIsCommentEditedSuccessfully, setIsCommentDeletedSuccessfully} ) {
@@ -108,8 +109,10 @@ export default function CommentCard( {comment, users, username, setIsCommentEdit
     return (
         <div className="comment-card">
             <div id="comment-card-info">
-                <img id="comment-card-owner-profile-image" src={userAccount[0]?.profile_image_url} alt="image"></img>
-                <div id="comment-card-owner-username">{comment.owner}</div>
+                <Link to={`/profile/${comment.owner}`}>
+                    <img id="comment-card-owner-profile-image" src={userAccount[0]?.profile_image_url} alt="image"></img>
+                </Link>                
+                <Link to={`/profile/${comment.owner}`} id="comment-card-owner-username">{comment.owner}</Link>
                 <div id="comment-card-timestamp">{new Date(parseInt(comment.timestamp)).toLocaleString()}</div>   
             </div>
 

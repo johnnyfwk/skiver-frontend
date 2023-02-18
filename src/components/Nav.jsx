@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { UserContext } from '../contexts/User';
 import { useContext } from 'react';
-import ProfileAndLogOut from './ProfileAndLogOut';
+import ProfileLinkAndLogOut from './ProfileLinkAndLogOut';
 
 export default function Nav() {
     const { username, setUsername } = useContext( UserContext );
@@ -11,7 +11,7 @@ export default function Nav() {
             {username
                 ? <nav>
                     <Link to="/create-a-post">Create a Post</Link>
-                    <ProfileAndLogOut />
+                    <ProfileLinkAndLogOut />
                   </nav>
                 : null}
         </div>    

@@ -244,7 +244,7 @@ export default function Index( {users, setUsers} ) {
 
                     {isProfileImageUrlInputValid === null || isProfileImageUrlInputValid === true
                     ? null
-                    : <span className="error">Please enter a valid URL.</span>}
+                    : <span className="error">Please enter a valid image URL.</span>}
                     
                     {isUsernameRegisteredSuccessfully === null || isUsernameRegisteredSuccessfully === true
                         ? null

@@ -28,11 +28,11 @@ export function getPosts() {
         })
 }
 
-export function createAPost(username, body, likes, image_url, timestamp) {
+export function getPostsByUsername(username) {
     return skiverApiBaseUrl
-        .post('/posts', {username, body, likes, image_url, timestamp})
+        .get(`/users/${username}/posts`)
         .then((response) => {
-            return response;
+            return response.data.posts;
         })
 }
 
@@ -41,6 +41,22 @@ export function getCommentsByPostId(postId) {
         .get(`/posts/${postId}/comments`)
         .then((response) => {
             return response.data.comments;
+        })
+}
+
+export function getCommentsByUsername(username) {
+    return skiverApiBaseUrl
+        .get(`/users/${username}/comments`)
+        .then((response) => {
+            return response.data.comments;
+        })
+}
+
+export function createAPost(username, body, likes, image_url, timestamp) {
+    return skiverApiBaseUrl
+        .post('/posts', {username, body, likes, image_url, timestamp})
+        .then((response) => {
+            return response;
         })
 }
 
@@ -55,6 +71,14 @@ export function postComment(post_id, owner, body, timestamp) {
 export function editPost(postId, body, likes, image_url) {
     return skiverApiBaseUrl
         .patch(`/posts/${postId}`, {body, likes, image_url})
+        .then((response) => {
+            return response;
+        })
+}
+
+export function editUserByUsername(username, profile_image_url) {
+    return skiverApiBaseUrl
+        .patch(`/users/${username}`, {profile_image_url})
         .then((response) => {
             return response;
         })
@@ -83,3 +107,28 @@ export function deleteComment(commentId) {
             return response;
         })
 }
+
+export function deleteAllCommentsByPostId(postId) {
+    return skiverApiBaseUrl
+        .delete(`/posts/${postId}/comments`)
+        .then((response) => {
+            return response;
+        })
+}
+
+export function deleteUserByUsername(username) {
+    return skiverApiBaseUrl
+        .delete(`/users/${username}`)
+        .then((response) => {
+            return response;
+        })
+}
+
+export function deleteAllPostsByUsername(username) {
+    return skiverApiBaseUrl
+        .delete(`/users/${username}/posts`)
+        .then((response) => {
+            return response;
+        })
+}
+
