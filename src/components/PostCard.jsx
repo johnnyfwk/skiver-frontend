@@ -12,10 +12,8 @@ export default function PostCard( {post, users} ) {
     return (
         <Link to={`/posts/${post.post_id}`} className="post-card">
             <div id="post-card-owner-profile-image-and-username">
-                <Link to={`/profile/${post.username}`}>
-                    <img id="post-card-owner-profile-image" src={userAccount[0]?.profile_image_url} alt="image"></img>
-                </Link>                
-                <Link to={`/profile/${post.username}`} id="post-card-owner-username">{post.username}</Link>
+                <img id="post-card-owner-profile-image" src={userAccount[0]?.profile_image_url} alt="image"></img>          
+                <div id="post-card-owner-username">{post.username}</div>
             </div>
 
             <div id="post-card-body">
