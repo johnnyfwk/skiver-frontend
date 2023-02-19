@@ -46,10 +46,7 @@ export default function Home( {users, setUsers, posts, setPosts} ) {
     }, [])
 
     return (
-        <main>
-            <h1>Welcome {username}!</h1>
-            <p>View posts by other users below or <Link to="/create-a-post">create your own</Link>.</p>
-
+        <main id="home">
             <SearchBar posts={posts} setSearchResults={setSearchResults}/>
 
             {searchResults.length === 0
@@ -67,6 +64,8 @@ export default function Home( {users, setUsers, posts, setPosts} ) {
                     return <PostCard key={post.post_id} post={post} users={users}/>
                 })}
             </div>
+
+            <Link to="/create-a-post" id="create-post-button" title="Create Post">+</Link>
         </main>
     )
 }
