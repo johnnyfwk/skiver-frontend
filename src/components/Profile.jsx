@@ -30,6 +30,8 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
     const [ isUserHasNotCreatedAnyPostsMessageVisible, setIsUserHasNotCreatedAnyPostsMessageVisible ] = useState( false );
     const [ isUserHasNotCommentedOnAnyPostsMessageVisible, setIsUserHasNotCommentedOnAnyPostsMessageVisible ] = useState( false );
     const [ isUserDeletedSuccessfully, setIsUserDeletedSuccessfully ] = useState( null );
+    const [ isCommentEditedSuccessfully, setIsCommentEditedSuccessfully ] = useState( null );
+    const [ isCommentDeletedSuccessfully, setIsCommentDeletedSuccessfully ] = useState( null );
 
     const navigate = useNavigate();
 
@@ -108,7 +110,7 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
                 setIsCommentsLoadedSuccessfully(false);
                 setIsCommentsLoading(false);
             })
-    }, [user])
+    }, [user, isCommentEditedSuccessfully, isCommentDeletedSuccessfully])
 
     function onClickPostsTab() {
         setVisibleTab("posts");
@@ -228,6 +230,16 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
                 })
         }
     }
+
+    const styleProfilePostsTabs = {
+        background: visibleTab === "posts" ? "#000000" : "#ffffff",
+        color: visibleTab === "posts" ? "#ffffff" : "#000000"
+    }
+
+    const styleProfileCommentsTabs = {
+        background: visibleTab === "comments" ? "#000000" : "#ffffff",
+        color: visibleTab === "comments" ? "#ffffff" : "#000000"
+    }
     
     return (
         <main id="profile">
@@ -263,27 +275,34 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
                   </input>
                 : null}
 
-            {username === user && isEditProfileImageButtonVisible
-                ? <button onClick={onClickEditProfileImageButton}>Edit Profile Image</button>
-                : null}
+            <br />
 
-            {username === user && isCancelEditProfileImageButtonVisible
-                ? <button onClick={onClickCancelEditProfileImageButton}>Cancel Editing</button>
-                : null}
+            <div id="profile-edit-and-delete-buttons">
+                {username === user && isEditProfileImageButtonVisible
+                    ? <button onClick={onClickEditProfileImageButton}>Edit Profile Image</button>
+                    : null}
+
+                {username === user && isCancelEditProfileImageButtonVisible
+                    ? <button onClick={onClickCancelEditProfileImageButton}>Cancel Editing</button>
+                    : null}
+                
+                {username === user && isUpdateProfileImageButtonVisible
+                    ? <button onClick={onClickUpdateProfileImageButton}>Update Image</button>
+                    : null}
+
+                {username === user && isDeleteAccountButtonVisible
+                    ? <button onClick={onClickDeleteAccountButton}>Delete Account</button>
+                    : null}
+            </div>
             
-            {username === user && isUpdateProfileImageButtonVisible
-                ? <button onClick={onClickUpdateProfileImageButton}>Update Image</button>
-                : null}
-
-            {username === user && isDeleteAccountButtonVisible
-                ? <button onClick={onClickDeleteAccountButton}>Delete Account</button>
-                : null}
 
             {username === user && isDeleteAccountConfirmationMessageVisible
                 ? <div>
                     <p className="error">Are you sure you want to delete your account? If you made any posts or comments, they will be lost.</p>
-                    <button onClick={onClickConfirmDeleteAccountButton}>Delete</button>
-                    <button onClick={onClickCancelDeleteAccountButton}>Cancel</button>
+                    <div id="profile-delete-account-confirmation-buttons">
+                        <button onClick={onClickConfirmDeleteAccountButton}>Delete</button>
+                        <button onClick={onClickCancelDeleteAccountButton}>Cancel</button>
+                    </div>
                   </div>
                 : null}
 
@@ -296,12 +315,12 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
             <br /><br />
 
             <div id="profile-tabs">
-                <div onClick={onClickPostsTab} disabled={visibleTab === "posts"}>Posts</div>
-                <div onClick={onClickCommentsTab} disabled={visibleTab === "comments"}>Comments</div>
+                <div onClick={onClickPostsTab} style={styleProfilePostsTabs} disabled={visibleTab === "posts"}>Posts</div>
+                <div onClick={onClickCommentsTab} style={styleProfileCommentsTabs}  disabled={visibleTab === "comments"}>Comments</div>
             </div>
 
             {visibleTab === "posts"
-                ? <div>
+                ? <div id="profile-posts">
                     {isPostsByUsernameLoading ? <p>Loading user's posts...</p> : null}
 
                     {isPostsByUsernameLoadedSuccessfully === null || isPostsByUsernameLoadedSuccessfully === true
@@ -318,7 +337,7 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
                         })}
                     </div>
                   </div>
-                : <div>
+                : <div id="profile-comments">
                     {isCommentsLoading ? <p>Loading user's comments...</p> : null}
 
                     {isCommentsLoadedSuccessfully === null || isCommentsLoadedSuccessfully === true
@@ -334,18 +353,24 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
                             const commentsPost = posts.filter((post) => {
                                 return post.post_id === comment.post_id;
                             })
-                            return <div>
-                                <Link to={`/posts/${commentsPost[0].post_id}`}>{commentsPost[0].body}</Link>
+                            return <div key={comment.comment_id} id="profile-comments-post-link-and-comment-card">
+                                <Link to={`/posts/${commentsPost[0].post_id}`} id="profile-comments-post-link">{commentsPost[0].body}</Link>
                                 <CommentCard
                                     key={comment.comment_id}
                                     comment={comment}
                                     users={users}
                                     username={username}
+                                    isCommentEditedSuccessfully={isCommentEditedSuccessfully}
+                                    setIsCommentEditedSuccessfully={setIsCommentEditedSuccessfully}
+                                    isCommentDeletedSuccessfully={isCommentDeletedSuccessfully}
+                                    setIsCommentDeletedSuccessfully={setIsCommentDeletedSuccessfully}
                                 />
                             </div>
                         })}
                     </div>
                   </div>}
+
+                <Link to="/create-a-post" id="create-post-button" title="Create Post">+</Link>
         </main>
     )
 }

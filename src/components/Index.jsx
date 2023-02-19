@@ -143,7 +143,6 @@ export default function Index( {users, setUsers} ) {
 
     return (
         <main>
-            <h1>Welcome to Skiver</h1>
             <p>A social media site where you can waste time by sharing your thoughts, what you had for dinner, or any other pointless events in your life with the rest of the world.</p>
             <strong>This is not a real social network but a personal project for a portfolio. However, feel free to create an account and browse the site, but we recommend not using a password you have for your other accounts as details are not securely stored on our database.</strong>
 

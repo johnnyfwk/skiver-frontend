@@ -13,13 +13,13 @@ export default function PostCard( {post, users} ) {
             </div>
 
             <div id="post-card-body">
-                <div id="post-card-body-text">{post.body}</div>
+                <p id="post-card-body-text">{post.body}</p>
                 {post.image_url ? <img id="post-card-body-image" src={post.image_url} alt="image"></img> : null}
             </div>
 
             <div id="post-card-likes-and-timestamp">
-                <div id="post-card-timestamp">{new Date(parseInt(post.timestamp)).toLocaleString()}</div>
-                <div id="post-card-likes">&#x2665; {post.likes}</div>
+                <div id="post-card-timestamp">{new Date(parseInt(post.timestamp)).toLocaleString().replace(",", " ")}</div>
+                <div id="post-card-likes"><span id="heart">&#x2665;</span> {post.likes}</div>
             </div>
         </Link>
     )

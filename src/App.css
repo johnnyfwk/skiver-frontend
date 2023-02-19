@@ -3,34 +3,99 @@
   text-decoration: none;
 }
 
+:root {
+  --white: #ffffff;
+  --saffron: #eac435;
+  --black: #000000;
+  --light-grey: #e4e4e4;
+  --razzmatazz: #e40066;
+}
+
+body {
+  margin: 0;
+  background: var(--saffron);
+}
+
 img {
   width: 100%;
+  max-width: 600px;
 }
 
 p,
 strong {
+  font-size: 1.2rem;
   line-height: 1.5rem;
 }
 
-header {
-  background: #838383;
-  display: flex;
-  justify-content: space-between;
-}
-
+header,
+nav,
+main,
 footer {
-  background: #838383;
+  max-width: 800px;
+  margin: auto;
 }
 
-nav {
-  background: #cecece;
+header {
+  /* background: #dddddd; */
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: end;
+  padding: 10px 20px 0px 20px;
+}
+
+header a:link,
+header a:active,
+header a:visited {
+  color: var(--black);
+}
+
+#log-out {
+  font-size: 1.2rem;
+}
+
+#profile-link-and-log-out {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+#profile-link-and-log-out img {
+  max-width: 40px;
+}
+
+#logo {
+  color: var(--black);
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 main {
-  max-width: 800px;
-  margin: auto;
+  padding: 10px 20px;
+}
+
+footer {
+  padding: 20px;
+}
+
+button {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  font-weight: bold;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#home {
+  display: grid;
+  gap: 20px;
+}
+
+#search-bar {
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  font-size: 1.4rem;
 }
 
 .switch-forms-link {
@@ -43,16 +108,15 @@ main {
 }
 
 .success {
-  color: #1ae000;
+  color: var(--black);
 }
 
 .error {
-  color: #ff0000;
+  color: var(--black);
 }
 
 #search-bar {
   width: 100%;
-  max-width: 500px;
 }
 
 textarea {
@@ -60,19 +124,34 @@ textarea {
   height: 100px;
 }
 
+textarea,
+input {
+  padding: 10px;
+  border-radius: 0px;
+}
+
+
 .url-input {
   width: 100%;
+}
+
+textarea,
+input {
+  border: 1px solid var(--light-grey);
 }
 
 #post-cards,
 #comment-cards {
   display: grid;
-  gap: 50px;
+  gap: 30px;
 }
 
 .post-card {
-  background: lightgrey;
+  background: var(--white);
+  color: var(--black);
   display: grid;
+  padding: 20px;
+  border-radius: 0px;
 }
 
 #post-card-owner-profile-image-and-username,
@@ -80,59 +159,201 @@ textarea {
 #single-post-owner-profile-image-and-username,
 #single-post-likes-and-timestamp {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
 }
 
 #post-card-owner-profile-image,
-#single-post-owner-profile-image,
-#comment-card-owner-profile-image {
-  max-width: 75px;
+#single-post-owner-profile-image {
+  max-width: 50px;
+}
+
+#post-card-owner-username {
+  font-size: 1.2rem;
+  color: var(--black);
+}
+
+#post-card-body-text {
+  font-size: 1.3rem;
+  line-height: 1.7rem;
+}
+
+#post-card-likes-and-timestamp {
+  padding: 5px 0px 0px 0px;
+}
+
+#heart {
+  color: var(--razzmatazz);
 }
 
 #single-post-info-and-body {
-  background: yellow;
+  background: var(--white);
+  padding: 20px;
+  border-radius: 0px;
+}
+
+#single-post-owner-username {
+  font-size: 1.2rem;
+}
+
+#single-post-body-text {
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+
+#single-post-owner-profile-image-and-username a:link,
+#single-post-owner-profile-image-and-username a:visited,
+#single-post-owner-profile-image-and-username a:active {
+  color: var(--black);
+}
+
+#single-post-likes-and-timestamp {
+  padding: 5px 0px 0px 0px;
+}
+
+#edit-post-body-text-input,
+#input-create-a-post-text {
+  height: 200px;
+}
+
+#edit-post-body-characters {
+  color: var(--black);
+}
+
+#single-post-edit-and-delete-post-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+
+#form-post-a-comment {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 10px;
 }
 
 .comment-card  {
-  background: lightgrey;
+  background: var(--white);
   display: grid;
   grid-template-areas: 
-    'commentCardInfo commentCardBody'
-    'commentCardEditAndDeleteButtons commentCardEditAndDeleteButtons'
+    'commentCardInfo'
+    'commentCardBody'
+    'commentCardButtons'
   ;
-  grid-template-columns: 150px auto;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 0px;
 }
 
-#comment-card-info {
-  background: grey;
+#comment-card-owner-image-username-and-timestamp {
   grid-area: commentCardInfo;
+  display: grid;
+  grid-template-columns: 50px auto;
+  gap: 10px;
+}
+
+#comment-card-owner-username-and-timestamp {
+  display: grid;
+}
+
+#comment-card-timestamp {
+  color: var(--black);
+}
+
+#comment-card-owner-username:link,
+#comment-card-owner-username:active,
+#comment-card-owner-username:visited {
+  color: var(--black);
 }
 
 #comment-card-body {
-  background: yellow;
+  /* background: yellow; */
   grid-area: commentCardBody;
 }
 
-#comment-card-edit-and-delete-buttons {
-  grid-area: commentCardEditAndDeleteButtons;
+#comment-card-body-text {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
+#comment-card-buttons {
+  grid-area: commentCardButtons;
+  display: flex;
+  gap: 10px;
+  justify-content: end;
 }
 
 .like {
   cursor: pointer;
 }
 
+#profile {
+  display: grid;
+  justify-items: center;
+}
+
 #profile-image {
-  max-width: 300px;
+  width: 300px;
+}
+
+#profile-edit-and-delete-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#profile-delete-account-confirmation-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
 #profile-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;
+  gap: 30px;
   font-size: 1.5rem;
 }
 
 #profile-tabs div {
+  color: var(--white);
   cursor: pointer;
+  padding: 10px;
+}
+
+#profile-posts {
+  background: var(--black);
+  padding: 20px;
+}
+
+#profile-comments {
+  background: var(--black);
+  padding: 20px;
+}
+
+#profile-comments-post-link-and-comment-card {
+  display: grid;
+  gap: 10px;
+}
+
+#profile-comments-post-link:link,
+#profile-comments-post-link:active,
+#profile-comments-post-link:visited {
+  color: var(--white);
+  font-size: 1.2rem;
+}
+
+#create-post-button {
+  background: var(--black);
+  color: var(--white);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  font-size: 3rem;
+  padding: 0px 15px;
+  font-weight: bold;
 }
 

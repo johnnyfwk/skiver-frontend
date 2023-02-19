@@ -59,8 +59,8 @@ export default function CreateAPost() {
     return (
         <main>
             <h1>Create a Post</h1>
-            <p>What do you want to share with the world?</p>
 
+            <p>What do you want to share with the world?</p>
             <form id="form-create-a-post" onSubmit={handleSubmit}>
                 <textarea
                     id="input-create-a-post-text"
@@ -71,7 +71,6 @@ export default function CreateAPost() {
                 </textarea>
                 <div>Characters: {postTextInput.length}/300</div>
 
-                <br />
 
                 <p>Enter image URL (optional):</p>
                 <input

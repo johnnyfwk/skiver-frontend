@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as api from '../api';
 
-export default function CommentCard( {comment, users, username, setIsCommentEditedSuccessfully, setIsCommentDeletedSuccessfully} ) {
+export default function CommentCard( {comment, users, username, isCommentEditedSuccessfully, setIsCommentEditedSuccessfully, isCommentDeletedSuccessfully, setIsCommentDeletedSuccessfully} ) {
     const [ isEditCommentButtonVisible, setIsEditCommentButtonVisible ] = useState( true );
     const [ isDeleteCommentButtonVisible, setIsDeleteCommentButtonVisible ] = useState( true );
     const [ isCancelEditCommentButtonVisible, setIsCancelEditCommentButtonVisible ] = useState( false );
@@ -106,14 +106,20 @@ export default function CommentCard( {comment, users, username, setIsCommentEdit
             })
     }
 
+    const dateAndTime = new Date(parseInt(comment.timestamp)).toLocaleString().replace(",", " ");
+    const date = dateAndTime.slice(0, 10);
+    const time = dateAndTime.slice(11);
+
     return (
         <div className="comment-card">
-            <div id="comment-card-info">
+            <div id="comment-card-owner-image-username-and-timestamp">
                 <Link to={`/profile/${comment.owner}`}>
                     <img id="comment-card-owner-profile-image" src={userAccount[0]?.profile_image_url} alt="image"></img>
-                </Link>                
-                <Link to={`/profile/${comment.owner}`} id="comment-card-owner-username">{comment.owner}</Link>
-                <div id="comment-card-timestamp">{new Date(parseInt(comment.timestamp)).toLocaleString()}</div>   
+                </Link>
+                <div id="comment-card-owner-username-and-timestamp">
+                    <Link to={`/profile/${comment.owner}`} id="comment-card-owner-username">{comment.owner}</Link>
+                    <div id="comment-card-timestamp">{new Date(parseInt(comment.timestamp)).toLocaleString().replace(",", " ")}</div>
+                </div>             
             </div>
 
             <div id="comment-card-body">
@@ -143,10 +149,6 @@ export default function CommentCard( {comment, users, username, setIsCommentEdit
                 {username === comment.owner && isDeleteCommentButtonVisible
                     ? <button onClick={onClickDeleteCommentButton}>Delete</button>
                     : null}
-                
-                {username === comment.owner && isDeleteCommentConfirmationMessageVisible
-                    ? <span>Delete comment?</span>
-                    : null}
 
                 {username === comment.owner && isDeleteCommentNoButtonVisible
                     ? <button onClick={onClickDeleteCommentNoButton}>No</button>
@@ -154,6 +156,10 @@ export default function CommentCard( {comment, users, username, setIsCommentEdit
 
                 {username === comment.owner && isDeleteCommentYesButtonVisible
                     ? <button onClick={onClickDeleteCommentYesButton}>Yes</button>
+                    : null}
+                
+                {username === comment.owner && isDeleteCommentConfirmationMessageVisible
+                    ? <span>Delete comment?</span>
                     : null}
             </div>
         </div>

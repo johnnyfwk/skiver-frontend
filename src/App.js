@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Profile from './components/Profile';
 import Header from './components/Header';
-import Nav from './components/Nav';
 import Index from './components/Index';
 import Home from './components/Home';
 import CreateAPost from './components/CreateAPost';
@@ -17,8 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Nav />
+      <Header users={users}/>
       <Routes>
         <Route path="/" element={<Index users={users} setUsers={setUsers} />} />
         <Route path="/home" element={<Home users={users} setUsers={setUsers} posts={posts} setPosts={setPosts} />} />

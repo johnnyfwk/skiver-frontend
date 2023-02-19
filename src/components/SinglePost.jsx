@@ -234,7 +234,6 @@ export default function SinglePost( {users, setUsers} ) {
 
     return (
         <main id="single-post">
-            <h1>Single Post</h1>
             <div id="single-post-info-and-body">
                 <div id="single-post-owner-profile-image-and-username">
                     <Link to={`/profile/${post[0]?.username}`}>
@@ -242,32 +241,45 @@ export default function SinglePost( {users, setUsers} ) {
                     </Link>                    
                     <Link to={`/profile/${post[0]?.username}`} id="single-post-owner-username">{post[0]?.username}</Link>
                 </div>
+
                 <div>
                     {isCancelEditPostButtonVisible
-                        ? <textarea
-                            id="edit-post-body-text-input"
-                            name="edit-post-body-text-input"
-                            value={editPostBodyTextInput}
-                            onChange={onChangeEditPostBodyTextInput}>                            
-                          </textarea>
-                        : <div id="single-post-body-text">{post[0]?.body}</div>}
+                        ? <div>
+                            <textarea
+                                id="edit-post-body-text-input"
+                                name="edit-post-body-text-input"
+                                value={editPostBodyTextInput}
+                                onChange={onChangeEditPostBodyTextInput}
+                                maxLength="300">                            
+                            </textarea>
+                            <div id="edit-post-body-characters">Characters: {editPostBodyTextInput.length}/300</div>
+                        </div>
+                        
+                        : <p id="single-post-body-text">{post[0]?.body}</p>}
 
                     {isCancelEditPostButtonVisible
-                        ? <input
-                            type="text"
-                            id="edit-post-body-image-url-input"
-                            name="edit-post-body-image-url-input"
-                            className="url-input"
-                            value={editPostBodyImageUrlInput}
-                            onChange={onChangeEditPostBodyImageUrlInput}>                            
-                          </input>
-                        : post[0]?.image_url
-                            ? <img id="single-post-body-image" src={post[0]?.image_url}></img>
-                            : null}            
+                        ? <div>
+                            <p>Enter new image URL:</p>
+                            <input
+                                type="text"
+                                id="edit-post-body-image-url-input"
+                                name="edit-post-body-image-url-input"
+                                className="url-input"
+                                value={editPostBodyImageUrlInput}
+                                onChange={onChangeEditPostBodyImageUrlInput}>                            
+                            </input>
+                            <br /><br />
+                          </div>                        
+                        : null}
+                    
+                    
+
+                    <img id="single-post-body-image" src={post[0]?.image_url}></img>       
                 </div>
+
                 <div id="single-post-likes-and-timestamp">
-                    <div id="single-post-timestamp">{new Date(parseInt(post[0]?.timestamp)).toLocaleString()}</div>
-                    <div id="single-post-likes"onClick={onClickLikePost} className="like">&#x2665; {post[0]?.likes}</div>                    
+                    <div id="single-post-timestamp">{new Date(parseInt(post[0]?.timestamp)).toLocaleString().replace(",", " ")}</div>
+                    <div id="single-post-likes"onClick={onClickLikePost} className="like"><span id="heart">&#x2665;</span> {post[0]?.likes}</div>                    
                 </div>
             </div>
 
@@ -289,32 +301,36 @@ export default function SinglePost( {users, setUsers} ) {
                     ? <p className="success">Post is being deleted.</p>
                     : <p className="error">Post could not be deleted.</p>}
 
-            {post[0]?.username === username && isEditPostButtonVisible
-                ? <button onClick={onClickEditPostButton}>Edit Post</button>
-                : null}
-            
-            {isCancelEditPostButtonVisible
-                ? <button onClick={onClickCancelEditPostButton}>Cancel Edit</button>
-                : null}
+            <div id="single-post-edit-and-delete-post-buttons">
+                {post[0]?.username === username && isEditPostButtonVisible
+                    ? <button onClick={onClickEditPostButton}>Edit Post</button>
+                    : null}
+                
+                {isCancelEditPostButtonVisible
+                    ? <button onClick={onClickCancelEditPostButton}>Cancel Edit</button>
+                    : null}
 
-            {isUpdatePostButtonVisible
-                ? <button onClick={onClickUpdatePostButton} disabled={editPostBodyTextInput.length === 0}>Update Post</button>
-                : null}
+                {isUpdatePostButtonVisible
+                    ? <button onClick={onClickUpdatePostButton} disabled={editPostBodyTextInput.length === 0}>Update Post</button>
+                    : null}
 
-            {post[0]?.username === username && isDeletePostButtonVisible
-                ? <button onClick={onClickDeletePostButton}>Delete Post</button>
-                : null}
+                {post[0]?.username === username && isDeletePostButtonVisible
+                    ? <button onClick={onClickDeletePostButton}>Delete Post</button>
+                    : null}
+                
+                {isDeletePostConfirmationMessageVisible
+                    ? <div>
+                        <p>Delete post?</p>                    
+                        <button onClick={onClickDeletePostNo}>No</button>
+                        <button onClick={onClickDeletePostYes}>Yes</button>                
+                    </div>
+                    : null}
+            </div>
             
-            {isDeletePostConfirmationMessageVisible
-                ? <div>
-                    <p>Delete post?</p>                    
-                    <button onClick={onClickDeletePostNo}>No</button>
-                    <button onClick={onClickDeletePostYes}>Yes</button>                
-                  </div>
-                : null}
 
             <h2>Post a Comment</h2>
-            <form onSubmit={handleSubmit}>
+
+            <form onSubmit={handleSubmit} id="form-post-a-comment">
                 {isCommentPostedSuccessfully === null
                     ? null
                     : isCommentPostedSuccessfully === true
@@ -365,6 +381,8 @@ export default function SinglePost( {users, setUsers} ) {
                     />
                 })}
             </div>
+
+            <Link to="/create-a-post" id="create-post-button" title="Create Post">+</Link>
         </main>
     )
 }
