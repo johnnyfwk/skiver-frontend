@@ -1,13 +1,9 @@
 import { Link } from 'react-router-dom';
 
-export default function PostCard( {post, users} ) {
-    // console.log(post, "<------- post")
-    // console.log(users, "<------- users")
-    
+export default function PostCard( {post, users} ) {    
     const userAccount = users.filter((user) => {
         return user.username === post.username;
     })
-    // console.log(userAccount, "<-------- userAccount")
 
     return (
         <Link to={`/posts/${post.post_id}`} className="post-card">
