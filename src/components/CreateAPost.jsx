@@ -42,7 +42,7 @@ export default function CreateAPost() {
                     setIsPostSubmittedSuccessfully(true);
                     setTimeout(() => {
                         navigate('/home');
-                    }, 3000)
+                    }, 2000)
                 })
                 .catch((error) => {
                     setIsPostSubmittedSuccessfully(false);
