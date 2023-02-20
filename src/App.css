@@ -131,8 +131,12 @@ button {
   gap: 10px;
 }
 
-#index button {
+#log-in-button {
   width: 100px;
+}
+
+#create-account-button {
+  width: 150px;
 }
 
 .success {
@@ -274,6 +278,12 @@ input {
   align-items: center;
 }
 
+#single-post-submit-comment-button-and-messages {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 #form-post-a-comment {
   display: flex;
   flex-wrap: wrap;
@@ -284,7 +294,6 @@ input {
 label {
   font-size: 1.2rem;
 }
-
 
 .comment-card  {
   background: var(--white);

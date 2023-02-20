@@ -190,7 +190,7 @@ export default function Index( {users, setUsers} ) {
                             : <span className="error">Password is incorrect.</span>}
                     </div>
 
-                    <button disabled={logInUsernameInput.length === 0 || logInPasswordInput.length === 0 || !getUsernamesSuccessful}>Log In</button>
+                    <button disabled={logInUsernameInput.length === 0 || logInPasswordInput.length === 0 || !getUsernamesSuccessful} id="log-in-button">Log In</button>
 
                     <p>Don't have an account? Sign up <span onClick={onClickSwitchToCreateAnAccountForm} className="switch-forms-link">here</span>.</p>
                 </form>
@@ -247,7 +247,7 @@ export default function Index( {users, setUsers} ) {
                             name="register-profile-image-url"
                             value={registerProfileImageUrlInput}
                             onChange={onChangeRegisterProfileImageUrlInput}
-                            placeholder="Optional">
+                            placeholder="Optional. Leave blank for default avatar.">
                         </input>
 
                         {isProfileImageUrlInputValid === null || isProfileImageUrlInputValid === true
@@ -259,7 +259,7 @@ export default function Index( {users, setUsers} ) {
                             ? null
                             : <p className="error">Account could not be created.</p>}
 
-                    <button disabled={!isUsernameAvailable || !usernameContainsOnlyLetters || !getUsernamesSuccessful || registerPasswordInput.length === 0}>Create Account</button>
+                    <button disabled={!isUsernameAvailable || !usernameContainsOnlyLetters || !getUsernamesSuccessful || registerPasswordInput.length === 0} id="create-account-button">Create Account</button>
 
                     <p>Already have an account? Log in <span onClick={onClickSwitchToLogInForm} className="switch-forms-link">here</span>.</p>
                 </form>}

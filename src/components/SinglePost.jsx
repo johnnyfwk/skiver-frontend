@@ -339,13 +339,15 @@ export default function SinglePost( {users, setUsers} ) {
                     maxLength="300">
                 </textarea>
 
-                {isCommentPostedSuccessfully === null
-                    ? null
-                    : isCommentPostedSuccessfully === true
-                        ? <span className="success">Comment was posted successfully.</span>
-                        : <span className="error">Comment could not be posted.</span>}
+                <div id="single-post-submit-comment-button-and-messages">
+                    {isCommentPostedSuccessfully === null
+                        ? null
+                        : isCommentPostedSuccessfully === true
+                            ? <span className="success">Comment was posted successfully.</span>
+                            : <span className="error">Comment could not be posted.</span>}
 
-                <button onClick={onClickSubmitCommentButton} disabled={commentInput.length === 0}>Submit Comment</button>
+                    <button onClick={onClickSubmitCommentButton} disabled={commentInput.length === 0}>Submit Comment</button>
+                </div>                
             </form>
 
             <h2>Comments ({comments.length})</h2>
