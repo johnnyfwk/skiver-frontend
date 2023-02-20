@@ -275,8 +275,6 @@ export default function SinglePost( {users, setUsers} ) {
                             </input>
                           </div>                        
                         : null}
-                    
-                    <br />
 
                     <img id="single-post-body-image" src={post[0]?.image_url}></img>       
                 </div>
