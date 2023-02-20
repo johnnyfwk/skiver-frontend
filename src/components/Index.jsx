@@ -145,8 +145,8 @@ export default function Index( {users, setUsers} ) {
 
     return (
         <main id="index">
-            <p>A social media site where you can waste time by sharing your thoughts, opinions, and experiences with the rest of the world.</p>
-            <strong>This is not a real social network but a personal project for a portfolio. However, feel free to create an account and browse the site, but we recommend not using a password you have for your other accounts as details are not securely stored on our database.</strong>
+            <p>A social media site where you can waste time by sharing your thoughts, opinions, and experiences with other skivers around the world.</p>
+            <strong>This is not a real social network but a personal project for a portfolio. However, feel free to create an account and browse the site, but <span className="underline">we recommend not using a password you have for your other online accounts as details are not securely stored on our database</span>.</strong>
 
             {getUsernamesSuccessful ? null : <p className="error">Could not connect to the server. Please try again later.</p>}
 

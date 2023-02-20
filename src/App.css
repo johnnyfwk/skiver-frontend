@@ -127,8 +127,9 @@ button {
 #form-create-an-account-password,
 #form-create-an-account-image-url {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 10px;
+  align-items: center;
 }
 
 #log-in-button {
@@ -145,6 +146,10 @@ button {
 
 .error {
   color: var(--razzmatazz);
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 #home {
@@ -424,15 +429,3 @@ label {
   padding: 0px 15px;
   font-weight: bold;
 }
-
-@media screen and (min-width: 425px) {
-    #form-log-in-username,
-    #form-log-in-password,
-    #form-create-an-account-username,
-    #form-create-an-account-password,
-    #form-create-an-account-image-url {
-      flex-direction: row;
-      align-items: center;
-    }
-}
-
