@@ -72,6 +72,11 @@ export default function CreateAPost() {
 
 
                 <p>Enter image URL (optional):</p>
+
+                {isImageURlInputValid === null || isImageURlInputValid === true
+                    ? null
+                    : <div className="error">Please enter a valid image URL.</div>}
+
                 <input
                     type="text"
                     id="create-a-post-image-url"
@@ -80,9 +85,6 @@ export default function CreateAPost() {
                     value={imageUrlInput}
                     onChange={onChangeImageUrlInput}>
                 </input>
-                {isImageURlInputValid === null || isImageURlInputValid === true
-                    ? null
-                    : <span className="error">Please enter a valid URL.</span>}
 
                 <br /><br />
 
