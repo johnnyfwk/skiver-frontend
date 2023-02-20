@@ -6,7 +6,7 @@ export default function SearchBar( {posts, setSearchResults} ) {
     function onChangeSearchInput(event) {
         setSearchInput(event.target.value);
         const searchMatches = posts.filter((post) => {
-            return post.body.includes(event.target.value) || post.username.includes(event.target.value);
+            return post.body.toLowerCase().includes(event.target.value.toLowerCase()) || post.username.includes(event.target.value.toLowerCase());
         })
         setSearchResults(searchMatches);
     }

@@ -49,7 +49,7 @@ export default function Home( {users, setUsers, posts, setPosts} ) {
         <main id="home">
             <SearchBar posts={posts} setSearchResults={setSearchResults}/>
 
-            {searchResults.length === 0
+            {searchResults.length === 0 && !isPostsLoading
                 ? <p>No posts or users match your search.</p>
                 : null}
 
