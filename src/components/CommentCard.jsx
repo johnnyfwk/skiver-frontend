@@ -111,7 +111,7 @@ export default function CommentCard( {comment, users, username, isCommentEditedS
     const time = dateAndTime.slice(11);
 
     return (
-        <div className="comment-card">
+        <div className="comment-card" loading="lazy">
             <div id="comment-card-owner-image-username-and-timestamp">
                 <Link to={`/profile/${comment.owner}`}>
                     <img id="comment-card-owner-profile-image" src={userAccount[0]?.profile_image_url} alt="image"></img>

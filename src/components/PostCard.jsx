@@ -6,7 +6,7 @@ export default function PostCard( {post, users} ) {
     })
 
     return (
-        <Link to={`/posts/${post.post_id}`} className="post-card">
+        <Link to={`/posts/${post.post_id}`} className="post-card" loading="lazy">
             <div id="post-card-owner-profile-image-and-username">
                 <img id="post-card-owner-profile-image" src={userAccount[0]?.profile_image_url} alt="image"></img>          
                 <div id="post-card-owner-username">{post.username}</div>

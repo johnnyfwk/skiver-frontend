@@ -1,12 +1,14 @@
 * {
   box-sizing: border-box;
   text-decoration: none;
+  font-family:Verdana, Geneva, Tahoma, sans-serif
 }
 
 :root {
   --white: #ffffff;
   --saffron: #eac435;
   --black: #000000;
+  --grey: #919191;
   --light-grey: #e4e4e4;
   --razzmatazz: #e40066;
 }
@@ -67,6 +69,7 @@ header a:visited {
 }
 
 #logo {
+  font-family: 'Paytone One', sans-serif;
   color: var(--black);
   font-size: 2rem;
   font-weight: bold;
@@ -89,24 +92,47 @@ button {
   cursor: pointer;
 }
 
-#home {
-  display: grid;
-  gap: 20px;
+#log-in-username,
+#log-in-password,
+#register-username,
+#register-password {
+  width: 200px;
+  font-size: 1.1rem;
 }
 
-#search-bar {
-  border: 2px solid var(--black);
-  border-radius: 10px;
-  font-size: 1.4rem;
+#register-profile-image-url {
+  width: 100%;
+  max-width: 500px;
 }
 
 .switch-forms-link {
-  text-decoration: underline;
+  color: var(--razzmatazz);
   cursor: pointer;
 }
 
 .switch-forms-link:hover {
   text-decoration: none;
+  color: var(--black);
+}
+
+#form-log-in,
+#form-create-an-account {
+  display: grid;
+  gap: 10px;
+}
+
+#form-log-in-username,
+#form-log-in-password,
+#form-create-an-account-username,
+#form-create-an-account-password,
+#form-create-an-account-image-url {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#index button {
+  width: 100px;
 }
 
 .success {
@@ -117,6 +143,17 @@ button {
   color: var(--razzmatazz);
 }
 
+#home {
+  display: grid;
+  gap: 20px;
+}
+
+#search-bar {
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  font-size: 1.2rem;
+}
+
 #search-bar {
   width: 100%;
 }
@@ -124,6 +161,7 @@ button {
 textarea {
   width: 100%;
   height: 100px;
+  font-size: 1.2rem;
 }
 
 textarea,
@@ -132,9 +170,9 @@ input {
   border-radius: 0px;
 }
 
-
 .url-input {
   width: 100%;
+  font-size: 1rem;
 }
 
 textarea,
@@ -220,7 +258,7 @@ input {
 }
 
 #edit-post-body-characters {
-  color: var(--black);
+  color: var(--grey);
 }
 
 #single-post-edit-and-delete-post-buttons {
@@ -242,6 +280,11 @@ input {
   justify-content: end;
   gap: 10px;
 }
+
+label {
+  font-size: 1.2rem;
+}
+
 
 .comment-card  {
   background: var(--white);
@@ -280,7 +323,7 @@ input {
 }
 
 #comment-card-timestamp {
-  color: var(--black);
+  color: var(--grey);
 }
 
 #comment-card-body {
@@ -371,5 +414,16 @@ input {
   font-size: 3rem;
   padding: 0px 15px;
   font-weight: bold;
+}
+
+@media screen and (min-width: 425px) {
+    #form-log-in-username,
+    #form-log-in-password,
+    #form-create-an-account-username,
+    #form-create-an-account-password,
+    #form-create-an-account-image-url {
+      flex-direction: row;
+      align-items: center;
+    }
 }
 

@@ -102,11 +102,13 @@ export default function Index( {users, setUsers} ) {
 
     function onChangeLogInUsernameInput(event) {
         setUserLoggedInSuccessfully(null);
+        setIsLogInPasswordCorrect(null);
         setLogInUsernameInput(event.target.value);
     }
 
     function onChangeLogInPasswordInput(event) {
-        setIsLogInPasswordCorrect(null)
+        setIsLogInPasswordCorrect(null);
+        setUserLoggedInSuccessfully(null);
         setLogInPasswordInput(event.target.value);
     }
 
@@ -142,7 +144,7 @@ export default function Index( {users, setUsers} ) {
     }
 
     return (
-        <main>
+        <main id="index">
             <p>A social media site where you can waste time by sharing your thoughts, opinions, and experiences with the rest of the world.</p>
             <strong>This is not a real social network but a personal project for a portfolio. However, feel free to create an account and browse the site, but we recommend not using a password you have for your other accounts as details are not securely stored on our database.</strong>
 
@@ -152,39 +154,41 @@ export default function Index( {users, setUsers} ) {
                 ? <form autoComplete="off" id="form-log-in" onSubmit={handleSubmitLogIn}>
                     <h2>Log In</h2>
 
-                    <label htmlFor="log-in-username">Username:</label>
-                    <input
-                        autoComplete="off"
-                        type="text"
-                        id="log-in-username"
-                        name="log-in-username"
-                        value={logInUsernameInput}
-                        onChange={onChangeLogInUsernameInput}
-                        maxLength="20">
-                    </input>
+                    <div id="form-log-in-username">
+                        <label htmlFor="log-in-username">Username</label>
 
-                    {userLoggedInSuccessfully === null || userLoggedInSuccessfully === true
-                        ? null
-                        : <span className="error">User does not exist.</span>}
+                        <input
+                            autoComplete="off"
+                            type="text"
+                            id="log-in-username"
+                            name="log-in-username"
+                            value={logInUsernameInput}
+                            onChange={onChangeLogInUsernameInput}
+                            maxLength="20">
+                        </input>
 
-                    <br /><br />
+                        {userLoggedInSuccessfully === null || userLoggedInSuccessfully === true
+                            ? null
+                            : <span className="error">User does not exist.</span>}
+                    </div>
 
-                    <label htmlFor="log-in-password">Password:</label>
-                    <input
-                        autoComplete="off"
-                        type="password"
-                        id="log-in-password"
-                        name="log-in-password"
-                        value={logInPasswordInput}
-                        onChange={onChangeLogInPasswordInput}
-                        maxLength="20">
-                    </input>
+                    <div id="form-log-in-password">
+                        <label htmlFor="log-in-password">Password</label>
 
-                    {isLogInPasswordCorrect === null || isLogInPasswordCorrect === true
-                        ? null
-                        : <span className="error">Password is incorrect.</span>}
+                        <input
+                            autoComplete="off"
+                            type="password"
+                            id="log-in-password"
+                            name="log-in-password"
+                            value={logInPasswordInput}
+                            onChange={onChangeLogInPasswordInput}
+                            maxLength="20">
+                        </input>
 
-                    <br /><br />
+                        {isLogInPasswordCorrect === null || isLogInPasswordCorrect === true
+                            ? null
+                            : <span className="error">Password is incorrect.</span>}
+                    </div>
 
                     <button disabled={logInUsernameInput.length === 0 || logInPasswordInput.length === 0 || !getUsernamesSuccessful}>Log In</button>
 
@@ -193,63 +197,67 @@ export default function Index( {users, setUsers} ) {
                 
                 : <form autoComplete="off" id="form-create-an-account" onSubmit={handleSubmitCreateAnAccount}>
                     <h2>Create an Account</h2>
-                    <label htmlFor="register-username">Enter a username:</label>
-                    <input
-                        autoComplete="off"
-                        type="text"
-                        id="register-username"
-                        name="register-username"
-                        value={registerUsernameInput}
-                        onChange={onChangeRegisterUsernameInput}
-                        maxLength="20">
-                    </input>
 
-                    {isUsernameAvailable === null
-                        ? null
-                        : isUsernameAvailable
-                            ? <span className="success">Available</span>
-                            : <span className="error">Unavailable</span>}
-                    
-                    {usernameContainsOnlyLetters === null || usernameContainsOnlyLetters === true
-                        ? null
-                        : <span className="error">Usernames can only contain letters.</span>}
+                    <div id="form-create-an-account-username">
+                        <label htmlFor="register-username">Username</label>
 
-                    <br /><br />
+                        <input
+                            autoComplete="off"
+                            type="text"
+                            id="register-username"
+                            name="register-username"
+                            value={registerUsernameInput}
+                            onChange={onChangeRegisterUsernameInput}
+                            maxLength="20">
+                        </input>
 
-                    <label htmlFor="register-password">Enter a password:</label>
-                    <input
-                        autoComplete="off"
-                        type="password"
-                        id="register-password"
-                        name="register-password"
-                        value={registerPasswordInput}
-                        onChange={onChangeRegisterPasswordInput}
-                        maxLength="20">
-                    </input>
+                        {isUsernameAvailable === null
+                            ? null
+                            : isUsernameAvailable
+                                ? <span className="success">Available</span>
+                                : <span className="error">Unavailable</span>}
+                        
+                        {usernameContainsOnlyLetters === null || usernameContainsOnlyLetters === true
+                            ? null
+                            : <span className="error">Usernames can only contain letters.</span>}
+                    </div>
 
-                    <br /><br />
+                    <div id="form-create-an-account-password">
+                        <label htmlFor="register-password">Password</label>
+                        
+                        <input
+                            autoComplete="off"
+                            type="password"
+                            id="register-password"
+                            name="register-password"
+                            value={registerPasswordInput}
+                            onChange={onChangeRegisterPasswordInput}
+                            maxLength="20">
+                        </input>
+                    </div>
 
-                    <label htmlFor="register-profile-image">Enter a profile image URL (optional):</label>
-                    <br />
-                    <input
-                        autoComplete="off"
-                        type="text"
-                        id="register-profile-image-url"
-                        className="url-input"
-                        name="register-profile-image-url"
-                        value={registerProfileImageUrlInput}
-                        onChange={onChangeRegisterProfileImageUrlInput}>
-                    </input>
+                    <div id="form-create-an-account-image-url">
+                        <label htmlFor="register-profile-image">Profile image URL:</label>
 
-                    {isProfileImageUrlInputValid === null || isProfileImageUrlInputValid === true
-                    ? null
-                    : <span className="error">Please enter a valid image URL.</span>}
-                    
+                        <input
+                            autoComplete="off"
+                            type="text"
+                            id="register-profile-image-url"
+                            className="url-input"
+                            name="register-profile-image-url"
+                            value={registerProfileImageUrlInput}
+                            onChange={onChangeRegisterProfileImageUrlInput}
+                            placeholder="Optional">
+                        </input>
+
+                        {isProfileImageUrlInputValid === null || isProfileImageUrlInputValid === true
+                            ? null
+                            : <span className="error">Please enter a valid image URL.</span>}
+                    </div>
+
                     {isUsernameRegisteredSuccessfully === null || isUsernameRegisteredSuccessfully === true
-                        ? null
-                        : <p className="error">Account could not be created.</p>}
-                    
-                    <br /><br />
+                            ? null
+                            : <p className="error">Account could not be created.</p>}
 
                     <button disabled={!isUsernameAvailable || !usernameContainsOnlyLetters || !getUsernamesSuccessful || registerPasswordInput.length === 0}>Create Account</button>
 
