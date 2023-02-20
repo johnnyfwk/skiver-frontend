@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const skiverApiBaseUrl = axios.create({
-    baseURL: 'http://localhost:9090/api'
-    // baseURL: 'https://skiver.onrender.com/api'
+    // baseURL: 'http://localhost:9090/api'
+    baseURL: 'https://skiver.onrender.com/api'
 })
 
 export function getUsers() {
