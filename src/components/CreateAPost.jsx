@@ -45,7 +45,6 @@ export default function CreateAPost() {
                     }, 3000)
                 })
                 .catch((error) => {
-                    console.log();
                     setIsPostSubmittedSuccessfully(false);
                     setTimeout(() => {
                         setIsPostSubmittedSuccessfully(null);
