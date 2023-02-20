@@ -341,8 +341,8 @@ export default function SinglePost( {users, setUsers} ) {
                     {isCommentPostedSuccessfully === null
                         ? null
                         : isCommentPostedSuccessfully === true
-                            ? <span className="success">Comment was posted successfully.</span>
-                            : <span className="error">Comment could not be posted.</span>}
+                            ? <div className="success">Comment was posted successfully.</div>
+                            : <div className="error">Comment could not be posted.</div>}
 
                     <button onClick={onClickSubmitCommentButton} disabled={commentInput.length === 0}>Submit Comment</button>
                 </div>                

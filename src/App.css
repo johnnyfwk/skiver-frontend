@@ -290,6 +290,10 @@ input {
   align-items: center;
 }
 
+#single-post-submit-comment-button-and-messages:first-of-type {
+  text-align: right;
+}
+
 #form-post-a-comment {
   display: flex;
   flex-wrap: wrap;
@@ -394,7 +398,7 @@ label {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 #profile-tabs div {
