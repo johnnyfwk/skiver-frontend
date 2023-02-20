@@ -61,7 +61,9 @@ header a:visited {
 }
 
 #profile-link-and-log-out img {
-  max-width: 40px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
 }
 
 #logo {
@@ -112,7 +114,7 @@ button {
 }
 
 .error {
-  color: var(--black);
+  color: var(--razzmatazz);
 }
 
 #search-bar {
@@ -225,6 +227,13 @@ input {
   display: flex;
   gap: 10px;
   justify-content: end;
+  align-items: center;
+}
+
+#single-post-delete-post-confirmation-message-and-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 #form-post-a-comment {
@@ -255,16 +264,22 @@ input {
 }
 
 #comment-card-owner-username-and-timestamp {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-#comment-card-timestamp {
-  color: var(--black);
+#comment-card-owner-username {
+  font-size: 1.2rem;
 }
 
 #comment-card-owner-username:link,
 #comment-card-owner-username:active,
 #comment-card-owner-username:visited {
+  color: var(--black);
+}
+
+#comment-card-timestamp {
   color: var(--black);
 }
 
@@ -283,6 +298,7 @@ input {
   display: flex;
   gap: 10px;
   justify-content: end;
+  align-items: center;
 }
 
 .like {
@@ -313,7 +329,7 @@ input {
 #profile-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 10px;
   font-size: 1.5rem;
 }
 

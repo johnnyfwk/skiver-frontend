@@ -10,6 +10,8 @@ export default function Home( {users, setUsers, posts, setPosts} ) {
     const [ isPostsLoading, setIsPostsLoading ] = useState( true );
     const [ isPostsLoadedSuccessfully, setIsPostsLoadedSuccessfully ] = useState( null );
     const [ searchResults, setSearchResults ] = useState( [] );
+
+    // console.log(username)
     
     const navigate = useNavigate();
     useEffect(() => {

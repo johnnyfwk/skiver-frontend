@@ -134,6 +134,10 @@ export default function CommentCard( {comment, users, username, isCommentEditedS
             </div>
 
             <div id="comment-card-buttons">
+                {username === comment.owner && isDeleteCommentConfirmationMessageVisible
+                        ? <span>Delete comment?</span>
+                        : null}
+
                 {username === comment.owner && isEditCommentButtonVisible
                     ? <button onClick={onClickEditCommentButton}>Edit</button>
                     : null}
@@ -156,10 +160,6 @@ export default function CommentCard( {comment, users, username, isCommentEditedS
 
                 {username === comment.owner && isDeleteCommentYesButtonVisible
                     ? <button onClick={onClickDeleteCommentYesButton}>Yes</button>
-                    : null}
-                
-                {username === comment.owner && isDeleteCommentConfirmationMessageVisible
-                    ? <span>Delete comment?</span>
                     : null}
             </div>
         </div>

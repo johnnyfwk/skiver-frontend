@@ -201,33 +201,37 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
                         console.log(response);
                     })
             })
+        if (usersComments) {
             api.deleteAllCommentsByUsername(username)
                 .then(() => {
                     api.deleteAllPostsByUsername(username)
-                })            
-                .then(() => {
-                    api.deleteUserByUsername(username)
                 })
-                .then(() => {
-                    setIsUserDeletedSuccessfully(true);
-                    setIsDeleteAccountConfirmationMessageVisible(false);
-                    setIsDeleteAccountButtonVisible(true);
-                    setIsEditProfileImageButtonVisible(true);
-                    setTimeout(() => {
-                        setUsername("");
-                        navigate('/');         
-                    }, 3000);
-                })
-                .catch((error) => {
-                    console.log(error);
-                    setIsUserDeletedSuccessfully(false);
-                    setIsDeleteAccountConfirmationMessageVisible(false);
-                    setIsDeleteAccountButtonVisible(true);
-                    setIsEditProfileImageButtonVisible(true);
-                    setTimeout(() => {
-                        setIsUserDeletedSuccessfully(null);
-                    }, 3000)
-                })
+                .then((response) => {
+                    console.log(response);
+                })     
+        }
+        api.deleteUserByUsername(username)
+            .then(() => {
+                setIsUserDeletedSuccessfully(true);
+                setIsDeleteAccountConfirmationMessageVisible(false);
+                setIsDeleteAccountButtonVisible(false);
+                setIsEditProfileImageButtonVisible(false);
+
+                setTimeout(() => {
+                    setUsername("");
+                    navigate('/');         
+                }, 3000);
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsUserDeletedSuccessfully(false);
+                setIsDeleteAccountConfirmationMessageVisible(false);
+                setIsDeleteAccountButtonVisible(true);
+                setIsEditProfileImageButtonVisible(true);
+                setTimeout(() => {
+                    setIsUserDeletedSuccessfully(null);
+                }, 3000)
+            })
         }
     }
 
@@ -239,6 +243,10 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
     const styleProfileCommentsTabs = {
         background: visibleTab === "comments" ? "#000000" : "#ffffff",
         color: visibleTab === "comments" ? "#ffffff" : "#000000"
+    }
+
+    const styleNoPostsOrComments = {
+        color: "#ffffff"
     }
     
     return (
@@ -260,8 +268,8 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
             {isEditProfileSuccessful === null
                 ? null
                 : isEditProfileSuccessful === true
-                    ? <p className="success">Profile image has been updated</p>
-                    : <p className="error">Profile image could not be updated.</p>}
+                    ? <div className="success">Profile image has been updated</div>
+                    : <div className="error">Profile image could not be updated.</div>}
 
             {username === user && isCancelEditProfileImageButtonVisible
                 ? <input
@@ -328,7 +336,7 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
                         : <p className="error">User's posts could not loaded.</p>}
 
                     {isUserHasNotCreatedAnyPostsMessageVisible
-                        ? <p>No posts created yet.</p>
+                        ? <p style={styleNoPostsOrComments}>No posts have been created yet.</p>
                         : null}
 
                     <div id="post-cards">
@@ -345,7 +353,7 @@ export default function Profile( {users, setUsers, posts, setPosts} ) {
                         : <p className="error">User's comments could not loaded.</p>}
 
                     {isUserHasNotCommentedOnAnyPostsMessageVisible
-                        ? <p>No comments made on any posts yet.</p>
+                        ? <p style={styleNoPostsOrComments}>No comments made on any posts yet.</p>
                         : null}
 
                     <div id="comment-cards">

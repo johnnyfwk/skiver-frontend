@@ -260,6 +260,11 @@ export default function SinglePost( {users, setUsers} ) {
                     {isCancelEditPostButtonVisible
                         ? <div>
                             <p>Enter new image URL:</p>
+
+                            {isEditPostBodyImageUrlInputValid === null || isEditPostBodyImageUrlInputValid === true
+                                ? null
+                                : <div className="error">Please enter a valid image URL.</div>}
+
                             <input
                                 type="text"
                                 id="edit-post-body-image-url-input"
@@ -268,11 +273,10 @@ export default function SinglePost( {users, setUsers} ) {
                                 value={editPostBodyImageUrlInput}
                                 onChange={onChangeEditPostBodyImageUrlInput}>                            
                             </input>
-                            <br /><br />
                           </div>                        
                         : null}
                     
-                    
+                    <br />
 
                     <img id="single-post-body-image" src={post[0]?.image_url}></img>       
                 </div>
@@ -285,23 +289,19 @@ export default function SinglePost( {users, setUsers} ) {
 
             <br />
 
-            {isEditPostBodyImageUrlInputValid === null || isEditPostBodyImageUrlInputValid === true
-                ? null
-                : <div className="error">Please enter a valid image URL.</div>}
-
-            {isEditPostSuccessful === null
-                ? null
-                : isEditPostSuccessful === true
-                    ? <p className="success">Post was updated.</p>
-                    : <p className="error">Post could not be updated.</p>}
-            
-            {isPostDeletedSuccessfully === null
-                ? null
-                : isPostDeletedSuccessfully === true
-                    ? <p className="success">Post is being deleted.</p>
-                    : <p className="error">Post could not be deleted.</p>}
-
             <div id="single-post-edit-and-delete-post-buttons">
+                {isEditPostSuccessful === null
+                    ? null
+                    : isEditPostSuccessful === true
+                        ? <span className="success">Post was updated.</span>
+                        : <span className="error">Post could not be updated.</span>}
+                
+                {isPostDeletedSuccessfully === null
+                    ? null
+                    : isPostDeletedSuccessfully === true
+                        ? <span className="success">Post is being deleted.</span>
+                        : <span className="error">Post could not be deleted.</span>}
+                
                 {post[0]?.username === username && isEditPostButtonVisible
                     ? <button onClick={onClickEditPostButton}>Edit Post</button>
                     : null}
@@ -319,11 +319,11 @@ export default function SinglePost( {users, setUsers} ) {
                     : null}
                 
                 {isDeletePostConfirmationMessageVisible
-                    ? <div>
-                        <p>Delete post?</p>                    
+                    ? <div id="single-post-delete-post-confirmation-message-and-buttons">
+                        <span>Delete post?</span>                    
                         <button onClick={onClickDeletePostNo}>No</button>
                         <button onClick={onClickDeletePostYes}>Yes</button>                
-                    </div>
+                      </div>
                     : null}
             </div>
             
@@ -331,12 +331,6 @@ export default function SinglePost( {users, setUsers} ) {
             <h2>Post a Comment</h2>
 
             <form onSubmit={handleSubmit} id="form-post-a-comment">
-                {isCommentPostedSuccessfully === null
-                    ? null
-                    : isCommentPostedSuccessfully === true
-                        ? <p className="success">Comment was posted successfully.</p>
-                        : <p className="error">Comment could not be posted.</p>}
-
                 <textarea
                     id="input-comment"
                     name="input-comment"
@@ -344,6 +338,13 @@ export default function SinglePost( {users, setUsers} ) {
                     onChange={onChangeCommentInput}
                     maxLength="300">
                 </textarea>
+
+                {isCommentPostedSuccessfully === null
+                    ? null
+                    : isCommentPostedSuccessfully === true
+                        ? <span className="success">Comment was posted successfully.</span>
+                        : <span className="error">Comment could not be posted.</span>}
+
                 <button onClick={onClickSubmitCommentButton} disabled={commentInput.length === 0}>Submit Comment</button>
             </form>
 
