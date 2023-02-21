@@ -281,7 +281,8 @@ export default function SinglePost( {users, setUsers} ) {
 
                 <div id="single-post-likes-and-timestamp">
                     <div id="single-post-timestamp">{new Date(parseInt(post[0]?.timestamp)).toLocaleString().replace(",", " ")}</div>
-                    <div id="single-post-likes"onClick={onClickLikePost} className="like"><span id="heart">&#x2665;</span> {post[0]?.likes}</div>                    
+                    <div id="single-post-likes"onClick={onClickLikePost} className="like"><span id="heart">&#x2665;</span> {post[0]?.likes}</div>
+                    <div>&#128488; {comments.length}</div>                  
                 </div>
             </div>
 

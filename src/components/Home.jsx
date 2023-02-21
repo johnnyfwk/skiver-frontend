@@ -37,9 +37,9 @@ export default function Home( {users, setUsers, posts, setPosts} ) {
 
     useEffect(() => {
         api.getUsers()
-        .then((response) => {
-            setUsers(response);
-        })
+            .then((response) => {
+                setUsers(response);
+            })
         .catch((error) => {
             console.log(error);
         })

@@ -1,9 +1,21 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import * as api from '../api';
 
-export default function PostCard( {post, users} ) {    
+export default function PostCard( {post, users} ) {
+    const [ commentByPostId, setCommentByPostId ] = useState( [] );
+
     const userAccount = users.filter((user) => {
         return user.username === post.username;
     })
+
+    useEffect(() => {
+        api.getCommentsByPostId(post.post_id)
+        .then((response) => {
+            setCommentByPostId(response);
+        })
+    }, [])
+
 
     return (
         <Link to={`/posts/${post.post_id}`} className="post-card" loading="lazy">
@@ -20,6 +32,7 @@ export default function PostCard( {post, users} ) {
             <div id="post-card-likes-and-timestamp">
                 <div id="post-card-timestamp">{new Date(parseInt(post.timestamp)).toLocaleString().replace(",", " ")}</div>
                 <div id="post-card-likes"><span id="heart">&#x2665;</span> {post.likes}</div>
+                <div>&#128488; {commentByPostId.length}</div>
             </div>
         </Link>
     )
