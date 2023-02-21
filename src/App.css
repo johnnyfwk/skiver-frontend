@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box;
   text-decoration: none;
-  font-family:Verdana, Geneva, Tahoma, sans-serif
+  font-family: Verdana, Geneva, Tahoma, sans-serif
 }
 
 :root {
@@ -20,7 +20,6 @@ body {
 
 img {
   width: 100%;
-  /* max-width: 600px; */
 }
 
 p,
@@ -33,12 +32,11 @@ header,
 nav,
 main,
 footer {
-  max-width: 800px;
+  max-width: 600px;
   margin: auto;
 }
 
 header {
-  /* background: #dddddd; */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -445,10 +443,14 @@ label {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  font-size: 3rem;
-  padding: 0px 15px;
+  font-size: 5rem;
   font-weight: bold;
+  display: grid;
+  justify-content: center;
+  align-content: center;
 }
 
 @media screen and (min-width: 425px) {
