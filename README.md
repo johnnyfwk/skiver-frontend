@@ -12,5 +12,6 @@ To run this project locally:
 - type 'git clone https://github.com/johnnyfwk/skiver-frontend.git' to copy that repo to your local machine;
 - type 'cd skiver-frontend' to go that folder;
 - type 'npm i' to install all packages the project requires to run;
+- to seed the tables required for this project, follow the instructions in the back end readme at https://github.com/johnnyfwk/skiver-backend;
 - type 'npm start' to run the project;
 - your browser should automatically display the app; if it doesn't, type 'http://localhost:3000/' into your browser.
