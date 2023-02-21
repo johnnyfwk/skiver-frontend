@@ -20,7 +20,7 @@ body {
 
 img {
   width: 100%;
-  max-width: 600px;
+  /* max-width: 600px; */
 }
 
 p,
@@ -229,6 +229,11 @@ input {
   line-height: 1.7rem;
 }
 
+#post-card-body-image {
+  height: 300px;
+  object-fit: cover;
+}
+
 #post-card-likes-and-timestamp {
   padding: 5px 0px 0px 0px;
 }
@@ -243,6 +248,12 @@ input {
   border-radius: 0px;
 }
 
+#single-post-owner-profile-image-and-username a:link,
+#single-post-owner-profile-image-and-username a:visited,
+#single-post-owner-profile-image-and-username a:active {
+  color: var(--black);
+}
+
 #single-post-owner-username {
   font-size: 1.2rem;
 }
@@ -252,10 +263,9 @@ input {
   line-height: 2rem;
 }
 
-#single-post-owner-profile-image-and-username a:link,
-#single-post-owner-profile-image-and-username a:visited,
-#single-post-owner-profile-image-and-username a:active {
-  color: var(--black);
+#single-post-body-image {
+  max-height: 500px;
+  object-fit: contain;
 }
 
 #single-post-likes-and-timestamp {
