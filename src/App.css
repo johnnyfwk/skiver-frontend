@@ -230,8 +230,8 @@ input {
 }
 
 #post-card-body-image {
-  height: 300px;
-  object-fit: cover;
+  max-height: 400px;
+  object-fit: contain;
 }
 
 #post-card-likes-and-timestamp {
