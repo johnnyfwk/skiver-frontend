@@ -24,7 +24,6 @@ img {
 
 p,
 strong {
-  font-size: 1.2rem;
   line-height: 1.5rem;
 }
 
@@ -95,7 +94,6 @@ button {
 #register-username,
 #register-password {
   width: 200px;
-  font-size: 1.1rem;
 }
 
 #register-profile-image-url {
@@ -117,6 +115,11 @@ button {
 #form-create-an-account {
   display: grid;
   gap: 10px;
+}
+
+#form-log-in label,
+#form-create-an-account label {
+  font-size: 1rem;
 }
 
 #form-log-in-username,
@@ -162,6 +165,7 @@ button {
 
 #search-bar {
   width: 100%;
+  padding: 10px;
 }
 
 textarea {
@@ -172,13 +176,12 @@ textarea {
 
 textarea,
 input {
-  padding: 10px;
+  padding: 5px;
   border-radius: 0px;
 }
 
 .url-input {
   width: 100%;
-  font-size: 1rem;
 }
 
 textarea,
@@ -206,7 +209,7 @@ input {
 #single-post-likes-and-timestamp {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
 }
 
@@ -218,13 +221,12 @@ input {
 }
 
 #post-card-owner-username {
-  font-size: 1.2rem;
   color: var(--black);
 }
 
 #post-card-body-text {
-  font-size: 1.3rem;
-  line-height: 1.7rem;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
 }
 
 #post-card-body-image {
@@ -252,13 +254,9 @@ input {
   color: var(--black);
 }
 
-#single-post-owner-username {
-  font-size: 1.2rem;
-}
-
 #single-post-body-text {
-  font-size: 1.4rem;
-  line-height: 2rem;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
 }
 
 #single-post-body-image {
@@ -309,10 +307,6 @@ input {
   gap: 10px;
 }
 
-label {
-  font-size: 1.2rem;
-}
-
 .comment-card  {
   background: var(--white);
   display: grid;
@@ -336,17 +330,14 @@ label {
 #comment-card-owner-username-and-timestamp {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
+  justify-content: center;
 }
 
 #comment-card-owner-profile-image {
   width: 50px;
   height: 50px;
   object-fit: cover;
-}
-
-#comment-card-owner-username {
-  font-size: 1.2rem;
 }
 
 #comment-card-owner-username:link,
@@ -360,7 +351,6 @@ label {
 }
 
 #comment-card-body {
-  /* background: yellow; */
   grid-area: commentCardBody;
 }
 
@@ -443,10 +433,10 @@ label {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  font-size: 5rem;
+  font-size: 4.5rem;
   font-weight: bold;
   display: grid;
   justify-content: center;
