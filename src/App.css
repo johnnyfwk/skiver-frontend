@@ -49,13 +49,9 @@ header a:visited {
   color: var(--black);
 }
 
-#log-out {
-  font-size: 1.2rem;
-}
-
 #profile-link-and-log-out {
   display: flex;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
 }
 
@@ -117,11 +113,6 @@ button {
   gap: 10px;
 }
 
-#form-log-in label,
-#form-create-an-account label {
-  font-size: 1rem;
-}
-
 #form-log-in-username,
 #form-log-in-password,
 #form-create-an-account-username,
@@ -160,7 +151,6 @@ button {
 #search-bar {
   border: 2px solid var(--black);
   border-radius: 10px;
-  font-size: 1.2rem;
 }
 
 #search-bar {
@@ -171,22 +161,19 @@ button {
 textarea {
   width: 100%;
   height: 100px;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 textarea,
 input {
   padding: 5px;
   border-radius: 0px;
+  border: 1px solid var(--light-grey);
 }
 
 .url-input {
   width: 100%;
-}
-
-textarea,
-input {
-  border: 1px solid var(--light-grey);
 }
 
 #post-cards,
@@ -225,11 +212,6 @@ input {
   color: var(--black);
 }
 
-#post-card-body-text {
-  font-size: 1.2rem;
-  line-height: 1.5rem;
-}
-
 #post-card-body-image {
   max-height: 400px;
   object-fit: contain;
@@ -241,6 +223,10 @@ input {
 
 #heart {
   color: var(--razzmatazz);
+}
+
+#create-a-post-characters {
+  font-size: 0.9rem;
 }
 
 #single-post-info-and-body {
@@ -255,15 +241,9 @@ input {
   color: var(--black);
 }
 
-#single-post-body-text {
-  font-size: 1.2rem;
-  line-height: 1.5rem;
-}
-
 #single-post-body {
   display: grid;
   gap: 20px;
-  padding: 20px 0 0 0;
 }
 
 #single-post-body-image {
@@ -287,6 +267,7 @@ input {
 
 #edit-post-body-characters {
   color: var(--grey);
+  font-size: 0.9rem;
 }
 
 #single-post-edit-and-delete-post-buttons {
@@ -327,7 +308,7 @@ input {
     'commentCardBody'
     'commentCardButtons'
   ;
-  gap: 20px;
+  /* gap: 20px; */
   padding: 20px;
   border-radius: 0px;
 }
@@ -358,11 +339,6 @@ input {
 
 #comment-card-body {
   grid-area: commentCardBody;
-}
-
-#comment-card-body-text {
-  font-size: 1.2rem;
-  line-height: 1.5rem;
 }
 
 #comment-card-buttons {
@@ -402,7 +378,6 @@ input {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  font-size: 1.2rem;
 }
 
 #profile-tabs div {
@@ -430,7 +405,6 @@ input {
 #profile-comments-post-link:active,
 #profile-comments-post-link:visited {
   color: var(--white);
-  font-size: 1.2rem;
 }
 
 #create-post-button {
@@ -442,11 +416,15 @@ input {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  font-size: 4.5rem;
+  font-size: 3.5rem;
   font-weight: bold;
   display: grid;
   justify-content: center;
   align-content: center;
+}
+
+#copyright {
+  font-size: 0.9rem;
 }
 
 @media screen and (min-width: 425px) {

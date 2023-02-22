@@ -4,7 +4,7 @@ export default function Footer() {
 
     return (
         <footer>
-            <div>Copyright &copy; {new Date().getFullYear()} Skiver.co.uk. All Rights Reserved.</div>
+            <div id="copyright">Copyright &copy; {new Date().getFullYear()} Skiver.co.uk. All Rights Reserved.</div>
         </footer>
     )
 }

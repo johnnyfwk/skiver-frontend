@@ -130,7 +130,7 @@ export default function CommentCard( {comment, users, username, isCommentEditedS
                         value={editCommentInput}
                         onChange={onChangeEditCommentInput}>
                       </textarea>
-                    : <div id="comment-card-body-text">{comment.body}</div>}                
+                    : <p id="comment-card-body-text">{comment.body}</p>}                
             </div>
 
             <div id="comment-card-buttons">

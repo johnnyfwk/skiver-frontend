@@ -255,7 +255,7 @@ export default function SinglePost( {users, setUsers} ) {
                             <div id="edit-post-body-characters">Characters: {editPostBodyTextInput.length}/300</div>
                         </div>
                         
-                        : <div id="single-post-body-text">{post[0]?.body}</div>}
+                        : <p id="single-post-body-text">{post[0]?.body}</p>}
 
                     {isCancelEditPostButtonVisible
                         ? <div id="edit-post-body-image-url">
@@ -275,9 +275,9 @@ export default function SinglePost( {users, setUsers} ) {
                             </input>
                           </div>                        
                         : null}
-
-                    <img id="single-post-body-image" src={post[0]?.image_url}></img>       
                 </div>
+
+                <img id="single-post-body-image" src={post[0]?.image_url}></img>  
 
                 <div id="single-post-likes-and-timestamp">
                     <div id="single-post-timestamp">{new Date(parseInt(post[0]?.timestamp)).toLocaleString().replace(",", " ")}</div>

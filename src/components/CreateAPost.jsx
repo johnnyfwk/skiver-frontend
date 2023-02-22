@@ -68,7 +68,7 @@ export default function CreateAPost() {
                     onChange={onChangePostTextInput}
                     maxLength="300">
                 </textarea>
-                <div>Characters: {postTextInput.length}/300</div>
+                <div id="create-a-post-characters">Characters: {postTextInput.length}/300</div>
 
 
                 <p>Enter image URL (optional):</p>

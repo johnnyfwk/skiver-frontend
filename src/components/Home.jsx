@@ -65,7 +65,7 @@ export default function Home( {users, setUsers, posts, setPosts} ) {
                 })}
             </div>
 
-            <Link to="/create-a-post" id="create-post-button" title="Create Post">+</Link>
+            <Link to="/create-a-post" id="create-post-button" title="Create Post"><span>+</span></Link>
         </main>
     )
 }
