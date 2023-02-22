@@ -242,7 +242,7 @@ export default function SinglePost( {users, setUsers} ) {
                     <Link to={`/profile/${post[0]?.username}`} id="single-post-owner-username">{post[0]?.username}</Link>
                 </div>
 
-                <div>
+                <div id="single-post-body">
                     {isCancelEditPostButtonVisible
                         ? <div>
                             <textarea
@@ -255,11 +255,11 @@ export default function SinglePost( {users, setUsers} ) {
                             <div id="edit-post-body-characters">Characters: {editPostBodyTextInput.length}/300</div>
                         </div>
                         
-                        : <p id="single-post-body-text">{post[0]?.body}</p>}
+                        : <div id="single-post-body-text">{post[0]?.body}</div>}
 
                     {isCancelEditPostButtonVisible
-                        ? <div>
-                            <p>Enter new image URL:</p>
+                        ? <div id="edit-post-body-image-url">
+                            <div>Enter new image URL:</div>
 
                             {isEditPostBodyImageUrlInputValid === null || isEditPostBodyImageUrlInputValid === true
                                 ? null

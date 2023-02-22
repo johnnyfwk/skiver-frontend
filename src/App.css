@@ -214,9 +214,10 @@ input {
 }
 
 #post-card-owner-profile-image,
-#single-post-owner-profile-image {
-  width: 50px;
-  height: 50px;
+#single-post-owner-profile-image,
+#comment-card-owner-profile-image {
+  width: 40px;
+  height: 40px;
   object-fit: cover;
 }
 
@@ -259,9 +260,20 @@ input {
   line-height: 1.5rem;
 }
 
+#single-post-body {
+  display: grid;
+  gap: 20px;
+  padding: 20px 0 0 0;
+}
+
 #single-post-body-image {
   max-height: 500px;
   object-fit: contain;
+}
+
+#edit-post-body-image-url {
+  display: grid;
+  gap: 10px;
 }
 
 #single-post-likes-and-timestamp {
@@ -324,7 +336,7 @@ input {
   grid-area: commentCardInfo;
   display: grid;
   grid-template-columns: 50px auto;
-  gap: 10px;
+  gap: 5px;
 }
 
 #comment-card-owner-username-and-timestamp {
@@ -332,12 +344,6 @@ input {
   flex-direction: column;
   gap: 5px;
   justify-content: center;
-}
-
-#comment-card-owner-profile-image {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
 }
 
 #comment-card-owner-username:link,
